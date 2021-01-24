@@ -9,6 +9,8 @@ namespace P01.Sheduling
         static void Main(string[] args)
         {
 
+            // Not in this folder
+
             int[] tasksInput = Console.ReadLine()
                 .Split(", ", StringSplitOptions.RemoveEmptyEntries)
                 .Select(int.Parse)
