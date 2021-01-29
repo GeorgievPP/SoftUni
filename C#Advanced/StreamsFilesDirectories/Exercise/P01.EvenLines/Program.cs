@@ -12,7 +12,6 @@ namespace P01.EvenLines
             {
                 string line = reader.ReadLine();
 
-               // string[] lineArr = line.Split();
                  int counter = 0;
 
                 using(StreamWriter writer = new StreamWriter("../../../output.txt"))
@@ -30,11 +29,7 @@ namespace P01.EvenLines
                                 sb.Append(lineArr[i] + " ");
                             }
 
-                            sb.Replace("-", "@");
-                            sb.Replace(",", "@");
-                            sb.Replace(".", "@");
-                            sb.Replace("!", "@");
-                            sb.Replace("?", "@");
+                            ReplaceSymbols(sb);
 
                             writer.WriteLine(sb.ToString());
 
@@ -46,6 +41,15 @@ namespace P01.EvenLines
                     }
                 }
             }
+        }
+
+        private static void ReplaceSymbols(StringBuilder sb)
+        {
+            sb.Replace("-", "@");
+            sb.Replace(",", "@");
+            sb.Replace(".", "@");
+            sb.Replace("!", "@");
+            sb.Replace("?", "@");
         }
     }
 }
