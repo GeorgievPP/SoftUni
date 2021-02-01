@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Problem07.TruckTour
 {
@@ -8,59 +8,49 @@ namespace Problem07.TruckTour
     {
         static void Main(string[] args)
         {
-            int n = int.Parse(Console.ReadLine());
+            int countOfPumps = 0;
+            int petrolPumps = int.Parse(Console.ReadLine());
 
             Queue<int[]> pumps = new Queue<int[]>();
+            FillQueue(pumps, petrolPumps);
 
-            FillQueue(n, pumps);
-
-            int count = 0;
-
-            while(true)
+            while (true)
             {
-
                 int fuelAmount = 0;
-
                 bool foundPoint = true;
 
-                for(int i = 0; i < n; i++)
+                for (int i = 0; i < petrolPumps; i++)
                 {
-
                     int[] currPump = pumps.Dequeue();
+                    int petrolPump = currPump[0];
+                    fuelAmount += petrolPump;
+                    int distance = currPump[1];
 
-                    fuelAmount += currPump[0];
-
-                    if(fuelAmount < currPump[1])
+                    if (fuelAmount < distance)
                     {
-
                         foundPoint = false;
-
                     }
 
-                    fuelAmount -= currPump[1];
+                    fuelAmount -= distance;
 
                     pumps.Enqueue(currPump);
-
                 }
 
-                if(foundPoint)
+                if (foundPoint)
                 {
                     break;
                 }
 
-                count++;
-
+                countOfPumps++;
                 pumps.Enqueue(pumps.Dequeue());
-
             }
 
-            Console.WriteLine(count);
-
+            Console.WriteLine(countOfPumps);
         }
 
-        private static void FillQueue(int n, Queue<int[]> pumps)
+        private static void FillQueue(Queue<int[]> pumps, int n)
         {
-            for(int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++)
             {
                 int[] currPump = Console.ReadLine()
                     .Split(' ', StringSplitOptions.RemoveEmptyEntries)
@@ -68,7 +58,6 @@ namespace Problem07.TruckTour
                     .ToArray();
 
                 pumps.Enqueue(currPump);
-
             }
         }
     }

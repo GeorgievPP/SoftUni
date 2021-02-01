@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Collections.Generic;
 
 namespace P04.FastFood
 {
@@ -8,6 +9,7 @@ namespace P04.FastFood
     {
         static void Main(string[] args)
         {
+            int sum = 0;
             int foodForDay = int.Parse(Console.ReadLine());
 
             int[] orders = Console.ReadLine()
@@ -18,39 +20,28 @@ namespace P04.FastFood
             Queue<int> queue = new Queue<int>(orders);
 
             int maxOrder = queue.Max();
-
-            int sum = 0;
-
             Console.WriteLine(maxOrder);
 
-            while(queue.Count > 0)
+            while (queue.Count > 0)
             {
                 int firsInQueue = queue.Peek();
-
                 sum += firsInQueue;
 
-                if(sum <= foodForDay)
+                if (sum <= foodForDay)
                 {
-
                     queue.Dequeue();
-
                     continue;
-
-                }
-                else
-                {
-
-                    int[] ordersLeft = queue.ToArray();
-
-                    Console.WriteLine("Orders left: " + string.Join(" ", ordersLeft));
-
-                    return;
                 }
 
+                StringBuilder sb = new StringBuilder();
+                sb.Append("Orders left: ");
+                sb.Append(string.Join(" ", queue));
+
+                Console.WriteLine(sb.ToString());
+                return;
             }
 
             Console.WriteLine("Orders complete");
-
         }
     }
 }

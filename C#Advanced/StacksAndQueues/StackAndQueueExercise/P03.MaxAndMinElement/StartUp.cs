@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace P03.MaximumAndMinimumElement
 {
@@ -8,11 +8,15 @@ namespace P03.MaximumAndMinimumElement
     {
         static void Main(string[] args)
         {
-            Stack<int> numbers = new Stack<int>();
+            const string PUSH = "1";
+            const string DELETE = "2";
+            const string MAX = "3";
+            const string MIN = "4";
+
+            Stack<int> stack = new Stack<int>();
 
             int n = int.Parse(Console.ReadLine());
-
-            for(int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++)
             {
                 string[] cmdArgs = Console.ReadLine()
                     .Split(' ', StringSplitOptions.RemoveEmptyEntries)
@@ -20,45 +24,39 @@ namespace P03.MaximumAndMinimumElement
 
                 string cmdType = cmdArgs[0];
 
-                if(cmdType == "1")
+                if (cmdType == PUSH)
                 {
-                    int elToPush = int.Parse(cmdArgs[1]);
-
-                    numbers.Push(elToPush);
-
+                    int elementToPush = int.Parse(cmdArgs[1]);
+                    stack.Push(elementToPush);
                 }
-                else if(cmdType == "2")
+
+                else if (cmdType == DELETE)
                 {
-                    if (numbers.Any())
+                    if (stack.Any())
                     {
-
-                        numbers.Pop();
-
-                    }
-                 
-                  
-                }
-                else if (cmdType == "3")
-                {
-                    if (numbers.Any())
-                    {
-
-                        Console.WriteLine(numbers.Max());
-
+                        stack.Pop();
                     }
                 }
-                else if (cmdType == "4")
+
+                else if (cmdType == MAX)
                 {
-                    if (numbers.Any())
+                    if (stack.Any())
                     {
-
-                        Console.WriteLine(numbers.Min());
-
+                        Console.WriteLine(stack.Max());
                     }
                 }
+
+                else if (cmdType == MIN)
+                {
+                    if (stack.Any())
+                    {
+                        Console.WriteLine(stack.Min());
+                    }
+                }
+
             }
 
-            Console.WriteLine(String.Join(", ", numbers));
+            Console.WriteLine(String.Join(", ", stack));
         }
     }
 }

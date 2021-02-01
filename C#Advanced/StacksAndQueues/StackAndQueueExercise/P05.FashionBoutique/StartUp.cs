@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace P05.FashionBotique
 {
@@ -8,46 +8,38 @@ namespace P05.FashionBotique
     {
         static void Main(string[] args)
         {
+            int clothesSum = 0;
+            int packagesCount = 0;
+
             int[] clothesInBox = Console.ReadLine()
                 .Split(' ', StringSplitOptions.RemoveEmptyEntries)
                 .Select(int.Parse)
                 .ToArray();
 
-            int capacity = int.Parse(Console.ReadLine());
+            int packageCapacity = int.Parse(Console.ReadLine());
 
             Stack<int> stack = new Stack<int>(clothesInBox);
 
-            int sum = 0;
-
-            int count = 0;
-
-            while(stack.Count > 0)
+            while (stack.Count > 0)
             {
-                int num = stack.Pop();
+                int currentClothesSum = stack.Pop();
+                clothesSum += currentClothesSum;
 
-                sum += num;
-
-                if(sum > capacity)
+                if (clothesSum > packageCapacity)
                 {
-                    stack.Push(num);
-
-                    count++;
-
-                    sum = 0;
-
+                    stack.Push(currentClothesSum);
+                    packagesCount++;
+                    clothesSum = 0;
                 }
 
-                if(stack.Count == 0)
+                if (stack.Count == 0)
                 {
-                    count++;
-
+                    packagesCount++;
                     break;
                 }
-
-
             }
 
-            Console.WriteLine(count);
+            Console.WriteLine(packagesCount);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace P06.SongsQueue
 {
@@ -14,57 +14,51 @@ namespace P06.SongsQueue
 
             Queue<string> queue = new Queue<string>(listOfSongs);
 
-            bool noSongs = false;
-
-            while(true)
+            while (true)
             {
-
                 string commmand = Console.ReadLine();
 
-                if (noSongs)
+                if (queue.Count == 0)
                 {
+                    Console.WriteLine("No more songs!");
                     return;
                 }
 
-                if(commmand == "Play")
+                if (commmand == "Play")
                 {
                     queue.Dequeue();
                 }
-                else if(commmand == "Show")
-                {
-                    string[] arr = queue.ToArray();
 
-                    Console.WriteLine(String.Join(", ", arr));
+                else if (commmand == "Show")
+                {
+                    Console.WriteLine(String.Join(", ", queue));
                 }
+
                 else
                 {
-                    string[] cmdArgs = commmand.Split(new char[] {' '}, 2);
+                    string[] cmdArgs = commmand.Split(new char[] { ' ' }, 2);
+                    string addCommand = cmdArgs[0];
 
-                    if(cmdArgs[0] == "Add")
+                    if (addCommand == "Add")
                     {
-                        if(!queue.Contains(cmdArgs[1]))
-                        {
-
-                            queue.Enqueue(cmdArgs[1]);
-
-                        }
-                        else
-                        {
-                            Console.WriteLine($"{cmdArgs[1]} is already contained!");
-                        }
+                        AddSong(queue, cmdArgs);
                     }
                 }
-
-                if(queue.Count == 0)
-                {
-                    Console.WriteLine("No more songs!");
-
-                    noSongs = true;
-                }
-
             }
+        }
 
-            
+        private static void AddSong(Queue<string> queue, string[] cmdArgs)
+        {
+            string newSong = cmdArgs[1];
+
+            if (!queue.Contains(newSong))
+            {
+                queue.Enqueue(newSong);
+            }
+            else
+            {
+                Console.WriteLine($"{newSong} is already contained!");
+            }
         }
     }
 }
