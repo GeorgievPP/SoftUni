@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace P05.PrintEvenNumbers
 {
@@ -8,48 +8,53 @@ namespace P05.PrintEvenNumbers
     {
         static void Main(string[] args)
         {
-            int[] numbers = Console.ReadLine().Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
+            int[] numbers = Console.ReadLine()
+                .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+                .Select(int.Parse)
+                .Where(n => n % 2 == 0)
+                .ToArray();
 
-            Queue<int> inputQueue = new Queue<int>(numbers);
+            //  Queue<int> inputQueue = new Queue<int>(numbers);
 
-            Queue<int> evenNumbersQueue = new Queue<int>();
+            Queue<int> evenNumbersQueue = new Queue<int>(numbers);
 
-            FillEvenNumbersQueue(numbers, inputQueue, evenNumbersQueue);
+            Console.WriteLine(String.Join(", ", evenNumbersQueue));
 
-            PrintEvenQueue(evenNumbersQueue);
+            // FillEvenNumbersQueue(numbers, inputQueue, evenNumbersQueue);
+            //  PrintEvenQueue(evenNumbersQueue);
         }
 
-        private static void PrintEvenQueue(Queue<int> evenNumbersQueue)
-        {
-            while (evenNumbersQueue.Count > 0)
-            {
+        /* private static void PrintEvenQueue(Queue<int> evenNumbersQueue)
+         {
+             while (evenNumbersQueue.Count > 0)
+             {
 
-                if (evenNumbersQueue.Count == 1)
-                {
-                    Console.Write(evenNumbersQueue.Dequeue());
-                }
-                else
-                {
-                    Console.Write($"{evenNumbersQueue.Dequeue()}, ");
-                }
+                 if (evenNumbersQueue.Count == 1)
+                 {
+                     Console.Write(evenNumbersQueue.Dequeue());
+                 }
+                 else
+                 {
+                     Console.Write($"{evenNumbersQueue.Dequeue()}, ");
+                 }
 
 
-            }
-        }
+             }
+         }
 
-        public static void FillEvenNumbersQueue(int[] numbers, Queue<int> inputQueue, Queue<int> evenNumbersQueue)
-        {
-            for (int i = 0; i < numbers.Length; i++)
-            {
+         public static void FillEvenNumbersQueue(int[] numbers, Queue<int> inputQueue, Queue<int> evenNumbersQueue)
+         {
+             for (int i = 0; i < numbers.Length; i++)
+             {
 
-                int n = inputQueue.Dequeue();
+                 int n = inputQueue.Dequeue();
 
-                if (n % 2 == 0)
-                {
-                    evenNumbersQueue.Enqueue(n);
-                }
+                 if (n % 2 == 0)
+                 {
+                     evenNumbersQueue.Enqueue(n);
+                 }
 
-            }
-        }
+             }
+         }*/
     }
 }

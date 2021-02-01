@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Collections.Generic;
 
 namespace P02
 {
@@ -8,61 +9,57 @@ namespace P02
     {
         static void Main(string[] args)
         {
-            int[] input = Console.ReadLine()
+            int[] engineNumbers = Console.ReadLine()
                 .Split(' ', StringSplitOptions.RemoveEmptyEntries)
                 .Select(int.Parse)
                 .ToArray();
+
+            int numberstToFillCount = engineNumbers[0];
+            int numbersToRemoveCount = engineNumbers[1];
+            int specialNumber = engineNumbers[2];
 
             int[] numbersToEnqueue = Console.ReadLine()
                 .Split(' ', StringSplitOptions.RemoveEmptyEntries)
                 .Select(int.Parse)
                 .ToArray();
 
-            int n = input[0];
+            Queue<int> queue = new Queue<int>();
+            FillQueue(numbersToEnqueue, queue, numberstToFillCount);
+            RemoveFromQueue(queue, numbersToRemoveCount);
+            IsQueueContainsSpecialNumber(queue, specialNumber);
+        }
 
-            int s = input[1];
-
-            int x = input[2];
-
-            Queue<int> numbers = new Queue<int>();
-
-            FillQueue(numbersToEnqueue, numbers, n);
-
-            DeleteFromQueue(numbers, s);
-
-            if(numbers.Contains(x))
+        private static void FillQueue(int[] numbersToEnqueue, Queue<int> queue, int count)
+        {
+            for (int i = 0; i < count; i++)
             {
+                queue.Enqueue(numbersToEnqueue[i]);
+            }
+        }
 
-                Console.WriteLine("true");
+        private static void RemoveFromQueue(Queue<int> queue, int count)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                queue.Dequeue();
+            }
+        }
 
+        private static void IsQueueContainsSpecialNumber(Queue<int> queue, int specialNumber)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            if (queue.Contains(specialNumber))
+            {
+                sb.Append("true");
             }
             else
             {
-
-                Console.WriteLine(numbers.Count > 0 ? numbers.Min() : 0);
-
+                int smallestNumber = queue.Count > 0 ? queue.Min() : 0;
+                sb.Append(smallestNumber);
             }
 
-        }
-
-        private static void DeleteFromQueue(Queue<int> numbers, int s)
-        {
-
-            for(int i = 0; i < s; i++)
-            {
-                numbers.Dequeue();
-            }
-
-        }
-
-        private static void FillQueue(int[] numbersToEnqueue, Queue<int> numbers, int n)
-        {
-
-            for(int i = 0; i < n; i++)
-            {
-                numbers.Enqueue(numbersToEnqueue[i]);
-
-            }
+            Console.WriteLine(sb.ToString());
         }
     }
 }

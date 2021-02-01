@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Collections.Generic;
 
 namespace P01.BasicStackOperation
 {
@@ -13,43 +14,44 @@ namespace P01.BasicStackOperation
                 .Select(int.Parse)
                 .ToArray();
 
+            int numbersToRemoveCount = input[1];
+            int elementToFound = input[2];
+
             int[] numbersToPush = Console.ReadLine()
                 .Split(' ', StringSplitOptions.RemoveEmptyEntries)
                 .Select(int.Parse)
                 .ToArray();
 
-            int n = input[0];
-            int s = input[1];
-            int x = input[2];
-
             Stack<int> stack = new Stack<int>(numbersToPush);
 
-            RemoveFromStack(s, stack);
+            RemoveFromStack(numbersToRemoveCount, stack);
 
-            PrintResult(x, stack);
+            SerachingForElement(elementToFound, stack);
+
+
         }
 
-        private static void PrintResult(int x, Stack<int> stack)
+        private static void SerachingForElement(int elementToFound, Stack<int> stack)
         {
-            if (stack.Contains(x))
+            StringBuilder sb = new StringBuilder();
+            if (stack.Contains(elementToFound))
             {
-
-                Console.WriteLine("true");
-
+                sb.Append("true");
             }
+
             else
             {
-
-                Console.WriteLine(stack.Count > 0 ? stack.Min() : 0);
-
+                int smallestNumber = stack.Count > 0 ? stack.Min() : 0;
+                sb.Append(smallestNumber);
             }
+
+            Console.WriteLine(sb.ToString());
         }
 
-        private static void RemoveFromStack(int s, Stack<int> stack)
+        private static void RemoveFromStack(int count, Stack<int> stack)
         {
-            for (int i = 0; i < s; i++)
+            for (int i = 0; i < count; i++)
             {
-
                 stack.Pop();
             }
         }

@@ -7,34 +7,28 @@ namespace P06.Supermarket
     {
         static void Main(string[] args)
         {
-            string name;
-
             Queue<string> queueOfCostumers = new Queue<string>();
 
-            while((name = Console.ReadLine()) != "End")
+            string name;
+            while ((name = Console.ReadLine()) != "End")
             {
-                FillAndPaidCostumers(name, queueOfCostumers);
+                if (name == "Paid")
+                {
+                    PrintPaidCostumers(queueOfCostumers);
+                    continue;
+                }
 
+                queueOfCostumers.Enqueue(name);
             }
 
             Console.WriteLine($"{queueOfCostumers.Count} people remaining.");
         }
 
-        private static void FillAndPaidCostumers(string name, Queue<string> queueOfCostumers)
+        private static void PrintPaidCostumers(Queue<string> queueOfCostumers)
         {
-            if (name == "Paid")
+            while (queueOfCostumers.Count > 0)
             {
-                while (queueOfCostumers.Count > 0)
-                {
-                    Console.WriteLine(queueOfCostumers.Dequeue());
-
-                }
-            }
-            else
-            {
-
-                queueOfCostumers.Enqueue(name);
-
+                Console.WriteLine(queueOfCostumers.Dequeue());
             }
         }
     }
