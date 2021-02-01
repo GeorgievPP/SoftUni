@@ -7,18 +7,11 @@ namespace P01.ReverseString
     {
         static void Main(string[] args)
         {
-            string input = Console.ReadLine();
+            char[] input = Console.ReadLine().ToCharArray();
 
-            Stack<char> stack = new Stack<char>();
+            Stack<char> stack = new Stack<char>(input);
 
-            for(int i = 0; i < input.Length; i++)
-            {
-
-                stack.Push(input[i]);
-
-            }
-
-            while(stack.Count > 0)
+            while (stack.Count > 0)
             {
 
                 Console.Write(stack.Pop());

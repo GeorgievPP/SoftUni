@@ -8,54 +8,69 @@ namespace P02.StackSum
     {
         static void Main(string[] args)
         {
-            int[] numbers = Console.ReadLine().Split().Select(int.Parse).ToArray();
+            int[] numbers = Console.ReadLine().Split()
+                .Select(int.Parse).ToArray();
 
             Stack<int> stack = new Stack<int>(numbers);
 
-            string command;
-
-            while((command = Console.ReadLine().ToLower()) != "end")
+            string input;
+            while ((input = Console.ReadLine().ToLower()) != "end")
             {
+                string[] cmdArgs = input.Split().ToArray();
+                string command = cmdArgs[0];
 
-                string[] splitted = command.Split().ToArray();
-
-                if(splitted[0] == "add")
+                if (command == "add")
                 {
-                    stack.Push(int.Parse(splitted[1]));
-
-                    stack.Push(int.Parse(splitted[2]));
+                    AddToStack(stack, cmdArgs);
 
                 }
 
-                else if(splitted[0] == "remove")
+                else if (command == "remove")
                 {
-
-                    int count = int.Parse(splitted[1]);
-
-                    if(count <= stack.Count)
-                    {
-
-                        for(int i = 0; i < count; i++)
-                        {
-
-                            stack.Pop();
-                        }
-
-                    }
+                    RemoveFromStack(stack, cmdArgs);
                 }
-
             }
 
+            PrintStackSum(stack);
+        }
+
+
+
+        private static void PrintStackSum(Stack<int> stack)
+        {
             int sum = 0;
 
-            while(stack.Count > 0)
+            while (stack.Count > 0)
             {
-
                 sum += stack.Pop();
-
             }
 
             Console.WriteLine($"Sum: {sum}");
         }
+
+        private static void RemoveFromStack(Stack<int> stack, string[] cmdArgs)
+        {
+            int count = int.Parse(cmdArgs[1]);
+
+            if (count <= stack.Count)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    stack.Pop();
+                }
+            }
+        }
+
+        private static void AddToStack(Stack<int> stack, string[] cmdArgs)
+        {
+            int[] numbersToAdd = cmdArgs.Skip(1)
+                .Select(int.Parse)
+                .ToArray();
+
+            stack.Push(numbersToAdd[0]);
+
+            stack.Push(numbersToAdd[1]);
+        }
+
     }
 }
