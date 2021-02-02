@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Collections.Generic;
 
 namespace P09.SimpleTextEditor
 {
@@ -9,63 +9,55 @@ namespace P09.SimpleTextEditor
     {
         static void Main(string[] args)
         {
-            int n = int.Parse(Console.ReadLine());
+            const string ADD = "1";
+            const string REMOVE = "2";
+            const string PRINT = "3";
+            const string CLEAR = "4";
 
             StringBuilder sb = new StringBuilder();
-
             Stack<string> stack = new Stack<string>();
-
             stack.Push(sb.ToString());
 
-            for(int i = 0; i < n; i++)
+            int n = int.Parse(Console.ReadLine());
+            for (int i = 0; i < n; i++)
             {
-
                 string[] input = Console.ReadLine()
                     .Split(' ', StringSplitOptions.RemoveEmptyEntries)
                     .ToArray();
 
                 string command = input[0];
-
-                if(command == "1")
+                if (command == ADD)
                 {
-
-                    sb.Append(input[1]);
+                    string argument = input[1];
+                    sb.Append(argument);
 
                     stack.Push(sb.ToString());
-
                     continue;
                 }
 
-                else if(command == "2")
+                else if (command == REMOVE)
                 {
 
                     int count = int.Parse(input[1]);
-
                     sb.Remove(sb.Length - count, count);
 
                     stack.Push(sb.ToString());
-
                     continue;
-
                 }
 
-                else if(command == "3")
+                else if (command == PRINT)
                 {
                     int index = int.Parse(input[1]);
 
                     Console.WriteLine(sb[index - 1]);
-
                     continue;
                 }
-                else if(command == "4")
+                else if (command == CLEAR)
                 {
-
                     stack.Pop();
 
-                    sb = new StringBuilder();
-
+                    sb.Clear();
                     sb.Append(stack.Peek());
-
                     continue;
                 }
 
