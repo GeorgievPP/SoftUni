@@ -7,41 +7,23 @@ namespace P02._2x2SquaresInMatrix
     {
         static void Main(string[] args)
         {
+            int count = 0;
             int[] matrixInfo = Console.ReadLine()
                 .Split().Select(int.Parse)
                 .ToArray();
-
             int rows = matrixInfo[0];
-
             int cols = matrixInfo[1];
+            char[,] matrix = ReadMatrix(rows, cols);
 
-            char[,] matrix = new char[rows, cols];
-
-            FillMatrix(matrix);
-
-            int count = 0;
-
-            PrintCount(rows, cols, matrix, count);
-
-        }
-
-        private static void PrintCount(int rows, int cols, char[,] matrix, int count)
-        {
             for (int row = 0; row < rows - 1; row++)
             {
-
                 for (int col = 0; col < cols - 1; col++)
                 {
+                    char currentElement = matrix[row, col];
 
-                    char currElement = matrix[row, col];
-
-                    if (currElement == matrix[row, col + 1]
-                        && currElement == matrix[row + 1, col]
-                        && currElement == matrix[row + 1, col + 1])
+                    if (IsEqual(matrix, row, col, currentElement))
                     {
-
                         count++;
-
                     }
                 }
             }
@@ -49,12 +31,22 @@ namespace P02._2x2SquaresInMatrix
             Console.WriteLine(count);
         }
 
-        private static void FillMatrix(char[,] matrix)
+        private static bool IsEqual(char[,] matrix, int row, int col, char currentElement)
         {
+            bool firstCheck = currentElement.Equals(matrix[row, col + 1]);
+            bool secondCheck = currentElement.Equals(matrix[row + 1, col]);
+            bool thirdCheck = currentElement.Equals(matrix[row + 1, col + 1]);
+            bool equal = firstCheck && secondCheck && thirdCheck;
 
+            return equal;
+        }
+
+
+        private static char[,] ReadMatrix(int rows, int cols)
+        {
+            char[,] matrix = new char[rows, cols];
             for (int row = 0; row < matrix.GetLength(0); row++)
             {
-
                 char[] currentRow = Console.ReadLine()
                     .Split(' ', StringSplitOptions.RemoveEmptyEntries)
                     .Select(char.Parse)
@@ -62,12 +54,11 @@ namespace P02._2x2SquaresInMatrix
 
                 for (int col = 0; col < matrix.GetLength(1); col++)
                 {
-
                     matrix[row, col] = currentRow[col];
-
                 }
             }
 
+            return matrix;
         }
 
     }
