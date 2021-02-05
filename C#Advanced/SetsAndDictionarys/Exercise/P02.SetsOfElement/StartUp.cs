@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Collections.Generic;
 
 namespace P0._2SetsOfElement
 {
@@ -8,56 +9,39 @@ namespace P0._2SetsOfElement
     {
         static void Main(string[] args)
         {
-
             int[] nAndM = Console.ReadLine()
                 .Split(' ', StringSplitOptions.RemoveEmptyEntries)
                 .Select(int.Parse)
                 .ToArray();
 
             int n = nAndM[0];
-
             int m = nAndM[1];
 
-            int length = n + m;
-
-            HashSet<int> nSet = new HashSet<int>();
-
-            HashSet<int> mSet = new HashSet<int>();
-
-            FillSets(n, length, nSet, mSet);
+            HashSet<int> nSet = ReadSet(n);
+            HashSet<int> mSet = ReadSet(m);
+            StringBuilder sb = new StringBuilder();
 
             foreach (var number in nSet)
             {
-
                 if (mSet.Contains(number))
                 {
-
-                    Console.Write(number + " ");
-
+                    sb.Append($"{number} ");
                 }
             }
+
+            Console.WriteLine(sb.ToString().TrimEnd());
         }
 
-        private static void FillSets(int n, int length, HashSet<int> nSet, HashSet<int> mSet)
+        private static HashSet<int> ReadSet(int length)
         {
+            HashSet<int> set = new HashSet<int>();
             for (int i = 0; i < length; i++)
             {
                 int num = int.Parse(Console.ReadLine());
-
-                if (i < n)
-                {
-
-                    nSet.Add(num);
-
-                }
-
-                else
-                {
-
-                    mSet.Add(num);
-
-                }
+                set.Add(num);
             }
+
+            return set;
         }
     }
 }
