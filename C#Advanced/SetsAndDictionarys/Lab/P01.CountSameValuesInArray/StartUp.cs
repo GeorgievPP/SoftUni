@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Collections.Generic;
 
 namespace P01.CountSameValuesInArray
 {
@@ -8,37 +9,33 @@ namespace P01.CountSameValuesInArray
     {
         static void Main(string[] args)
         {
-            double[] input = Console.ReadLine()
+            StringBuilder sb = new StringBuilder();
+
+            double[] doubleCollection = Console.ReadLine()
                 .Split()
                 .Select(double.Parse)
                 .ToArray();
 
             Dictionary<double, int> dict = new Dictionary<double, int>();
 
-            for (int i = 0; i < input.Length; i++)
+            for (int i = 0; i < doubleCollection.Length; i++)
             {
-
-                if (!dict.ContainsKey(input[i]))
+                if (!dict.ContainsKey(doubleCollection[i]))
                 {
-
-                    dict[input[i]] = 1;
-
+                    dict[doubleCollection[i]] = 1;
                 }
                 else
                 {
-
-                    dict[input[i]]++;
-
+                    dict[doubleCollection[i]]++;
                 }
-
             }
 
             foreach (var kvp in dict)
             {
-
-                Console.WriteLine($"{kvp.Key} - {kvp.Value} times");
-
+                sb.AppendLine($"{kvp.Key} - {kvp.Value} times");
             }
+
+            Console.WriteLine(sb.ToString());
         }
     }
 }

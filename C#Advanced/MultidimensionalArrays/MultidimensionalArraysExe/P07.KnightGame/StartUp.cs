@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 namespace P07.KnightGame
 {
@@ -7,150 +6,101 @@ namespace P07.KnightGame
     {
         static void Main(string[] args)
         {
+            int countReplaced = 0;
 
             int n = int.Parse(Console.ReadLine());
-
-            char[,] chessBoard = new char[n, n];
-
-            FillMatrix(chessBoard);
-
-            int countReplaced = 0;
+            char[,] matrix = new char[n, n];
+            FillMatrix(matrix);
 
             while (true)
             {
-
-                int maxAttacks = 0;
-
                 int rowKiller = 0;
-
                 int colKiller = 0;
+                int maxAttacks = 0;
 
                 for (int row = 0; row < n; row++)
                 {
-
                     for (int col = 0; col < n; col++)
                     {
-
-                        char currentSymbol = chessBoard[row, col];
-
                         int countAttacks = 0;
+                        char currentSymbol = matrix[row, col];
 
                         if (currentSymbol == 'K')
                         {
-
-                            if (IsInside(chessBoard, row - 2, col + 1) && chessBoard[row - 2, col + 1] == 'K')
+                            if (IsInside(matrix, row - 2, col + 1) && matrix[row - 2, col + 1] == 'K')
                             {
-
                                 countAttacks++;
-
                             }
 
-                            if (IsInside(chessBoard, row - 2, col - 1) && chessBoard[row - 2, col - 1] == 'K')
+                            if (IsInside(matrix, row - 2, col - 1) && matrix[row - 2, col - 1] == 'K')
                             {
-
                                 countAttacks++;
-
                             }
 
-                            if (IsInside(chessBoard, row + 1, col + 2) && chessBoard[row + 1, col + 2] == 'K')
+                            if (IsInside(matrix, row + 1, col + 2) && matrix[row + 1, col + 2] == 'K')
                             {
-
                                 countAttacks++;
-
                             }
 
-                            if (IsInside(chessBoard, row + 1, col - 2) && chessBoard[row + 1, col - 2] == 'K')
+                            if (IsInside(matrix, row + 1, col - 2) && matrix[row + 1, col - 2] == 'K')
                             {
-
                                 countAttacks++;
-
                             }
 
-                            if (IsInside(chessBoard, row - 1, col + 2) && chessBoard[row - 1, col + 2] == 'K')
+                            if (IsInside(matrix, row - 1, col + 2) && matrix[row - 1, col + 2] == 'K')
                             {
-
                                 countAttacks++;
-
                             }
 
-                            if (IsInside(chessBoard, row - 1, col - 2) && chessBoard[row - 1, col - 2] == 'K')
+                            if (IsInside(matrix, row - 1, col - 2) && matrix[row - 1, col - 2] == 'K')
                             {
-
                                 countAttacks++;
-
                             }
 
-                            if (IsInside(chessBoard, row + 2, col - 1) && chessBoard[row + 2, col - 1] == 'K')
+                            if (IsInside(matrix, row + 2, col - 1) && matrix[row + 2, col - 1] == 'K')
                             {
-
                                 countAttacks++;
-
                             }
 
-                            if (IsInside(chessBoard, row + 2, col + 1) && chessBoard[row + 2, col + 1] == 'K')
+                            if (IsInside(matrix, row + 2, col + 1) && matrix[row + 2, col + 1] == 'K')
                             {
-
                                 countAttacks++;
-
                             }
 
                             if (countAttacks > maxAttacks)
                             {
-
                                 maxAttacks = countAttacks;
-
                                 rowKiller = row;
-
                                 colKiller = col;
-
                             }
-
                         }
-
                     }
-
                 }
 
                 if (maxAttacks > 0)
                 {
-
-                    chessBoard[rowKiller, colKiller] = '0';
-
+                    matrix[rowKiller, colKiller] = '0';
                     countReplaced++;
-
                 }
 
                 else if (maxAttacks <= 0)
                 {
-
                     Console.WriteLine(countReplaced);
-
                     break;
-
                 }
-
             }
-
-
         }
 
         private static void FillMatrix(char[,] matrix)
         {
-
             for (int row = 0; row < matrix.GetLength(0); row++)
             {
-
                 char[] currentRow = Console.ReadLine().ToCharArray();
-
-
                 for (int col = 0; col < matrix.GetLength(1); col++)
                 {
-
                     matrix[row, col] = currentRow[col];
-
                 }
             }
-
         }
 
         private static bool IsInside(char[,] chessBoard, int targetRow, int targetCol)
@@ -160,5 +110,7 @@ namespace P07.KnightGame
                 && targetCol >= 0 && targetCol < chessBoard.GetLength(1);
 
         }
+
+
     }
 }
