@@ -2,13 +2,11 @@
 
 namespace P05.DateModifier
 {
-    public class Program
+    public class StartUp
     {
         static void Main(string[] args)
         {
-
             string dateOne = Console.ReadLine();
-
             string dateTwo = Console.ReadLine();
 
             DateModifier dateModifier = new DateModifier();
