@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>P02.Re_volt2._0</RootNamespace>
+    <RootNamespace>P02.Re_Volt3._0</RootNamespace>
   </PropertyGroup>
 
 </Project>
