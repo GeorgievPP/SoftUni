@@ -7,7 +7,6 @@ namespace P04.AddVAT
     {
         static void Main(string[] args)
         {
-
             decimal[] numbers = Console.ReadLine()
                 .Split(", ", StringSplitOptions.RemoveEmptyEntries)
                 .Select(decimal.Parse)
@@ -16,9 +15,7 @@ namespace P04.AddVAT
 
             foreach (var number in numbers)
             {
-
                 Console.WriteLine($"{number:f2}");
-
             }
         }
     }

@@ -1,74 +1,59 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
-namespace P01.Sheduling
+namespace P01.Sheduling2._0
 {
-    class StartUp
+    class Program
     {
         static void Main(string[] args)
         {
-
-            int[] tasksInput = Console.ReadLine()
+            int[] taskInput = Console.ReadLine()
                 .Split(", ", StringSplitOptions.RemoveEmptyEntries)
                 .Select(int.Parse)
                 .ToArray();
+            Stack<int> stack = new Stack<int>(taskInput);
 
-            Stack<int> tasks = new Stack<int>(tasksInput);
-
-
-            int[] threadsInput = Console.ReadLine()
+            int[] threadInput = Console.ReadLine()
                 .Split(' ', StringSplitOptions.RemoveEmptyEntries)
                 .Select(int.Parse)
                 .ToArray();
+            Queue<int> queue = new Queue<int>(threadInput);
 
-            Queue<int> threads = new Queue<int>(threadsInput);
-
-
-            int valueOfTask = int.Parse(Console.ReadLine());
-
-            int killerOfTask = 0;
-            string threadsResult = "";
+            int targetTask = int.Parse(Console.ReadLine());
+            int threadKiller = 0;
 
             while (true)
             {
+                int currentTask = stack.Peek();
+                int currentThread = queue.Peek();
 
-                int currentTask = tasks.Peek();
-                int currentThread = threads.Peek();
-
-                if (currentTask == valueOfTask)
+                if (currentTask == targetTask)
                 {
-
-                    killerOfTask = currentThread;
-
-                    threadsResult = String.Join(" ", threads);
-
+                    threadKiller = currentThread;
                     break;
-
                 }
 
-                if (currentThread >= currentTask)
+                if (currentTask > currentThread)
                 {
-                    tasks.Pop();
-                    threads.Dequeue();
-
+                    queue.Dequeue();
                     continue;
-
                 }
-
                 else
                 {
-                    threads.Dequeue();
-
+                    stack.Pop();
+                    queue.Dequeue();
                     continue;
                 }
 
             }
 
-            Console.WriteLine($"Thread with value {killerOfTask} killed task {valueOfTask}");
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine($"Thread with value {threadKiller} killed task {targetTask}")
+              .AppendLine(String.Join(" ", queue));
 
-            Console.WriteLine(threadsResult);
-
+            Console.WriteLine(sb.ToString().TrimEnd());
         }
     }
 }
