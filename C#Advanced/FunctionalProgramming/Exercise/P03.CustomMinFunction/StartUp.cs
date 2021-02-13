@@ -7,26 +7,18 @@ namespace P03.CustomMinFunction
     {
         static void Main(string[] args)
         {
-
-            Func<int[], int> minFunc = (arr) =>
+            Func<int[], int> returnMinNumber = (arrayOfInt) =>
             {
-
-                int minValue = int.MaxValue;
-
-                foreach (var num in arr)
+                int minNumber = int.MaxValue;
+                foreach (var number in arrayOfInt)
                 {
-
-                    if (num < minValue)
+                    if (number < minNumber)
                     {
-
-                        minValue = num;
-
+                        minNumber = number;
                     }
-
                 }
 
-                return minValue;
-
+                return minNumber;
             };
 
             int[] numbers = Console.ReadLine()
@@ -34,7 +26,7 @@ namespace P03.CustomMinFunction
                 .Select(int.Parse)
                 .ToArray();
 
-            Console.WriteLine(minFunc(numbers));
+            Console.WriteLine(returnMinNumber(numbers));
         }
     }
 }

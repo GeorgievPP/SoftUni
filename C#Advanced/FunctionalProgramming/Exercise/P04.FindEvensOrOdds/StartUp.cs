@@ -8,29 +8,25 @@ namespace P04.FindEvensOrOdds
     {
         static void Main(string[] args)
         {
-
             int[] bounds = Console.ReadLine()
                 .Split(' ', StringSplitOptions.RemoveEmptyEntries)
                 .Select(int.Parse)
                 .ToArray();
-
+            int startBound = bounds[0];
+            int endBound = bounds[1];
             string query = Console.ReadLine();
 
-            Predicate<int> predicate = query == "odd" ? new Predicate<int>((n) => n % 2 != 0) :
-                new Predicate<int>((n) => n % 2 == 0);
+            Predicate<int> predicate = query == "odd" ? new Predicate<int>((n) => n % 2 != 0)
+                                                      : new Predicate<int>((n) => n % 2 == 0);
 
             List<int> result = new List<int>();
 
-            for (int i = bounds[0]; i <= bounds[1]; i++)
+            for (int num = startBound; num <= endBound; num++)
             {
-
-                if (predicate(i))
+                if (predicate(num))
                 {
-
-                    result.Add(i);
-
+                    result.Add(num);
                 }
-
             }
 
             Console.WriteLine(String.Join(" ", result));
