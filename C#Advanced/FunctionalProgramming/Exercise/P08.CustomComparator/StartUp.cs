@@ -7,29 +7,21 @@ namespace P08.CustomComparator
     {
         static void Main(string[] args)
         {
-
             Func<int, int, int> comparator = new Func<int, int, int>((a, b) =>
             {
-
                 if (a % 2 == 0 && b % 2 != 0)
                 {
-
                     return -1;
-
                 }
 
                 else if (a % 2 != 0 && b % 2 == 0)
                 {
-
                     return 1;
-
                 }
 
                 else
                 {
-
                     return a.CompareTo(b);
-
                 }
 
             });
@@ -44,7 +36,6 @@ namespace P08.CustomComparator
             Array.Sort(numbers, comparison);
 
             Console.WriteLine(String.Join(" ", numbers));
-
         }
     }
 }
