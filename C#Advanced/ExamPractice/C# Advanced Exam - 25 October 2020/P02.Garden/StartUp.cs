@@ -19,13 +19,10 @@ namespace P02.Garden
 
             if (rows == cols)
             {
-
                 int[,] matrix = new int[rows, cols];
 
                 FillGarden(matrix);
-
                 string input;
-
                 while ((input = Console.ReadLine()) != "Bloom Bloom Plow")
                 {
                     int[] plantFlowerPos = input.Split(' ', StringSplitOptions.RemoveEmptyEntries)
