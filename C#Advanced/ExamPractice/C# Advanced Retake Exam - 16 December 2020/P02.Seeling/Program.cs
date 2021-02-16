@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Text;
 
-namespace P02.Seeling
+namespace P02.Selling
 {
     class Program
     {
@@ -13,31 +14,33 @@ namespace P02.Seeling
             }
 
             public int Row { get; set; }
-
             public int Col { get; set; }
 
-            public bool IsSafe(int rowCount, int colCount)
+
+            public bool IsSafe(int rows, int cols)
             {
-                if(Row < 0 || Col < 0)
+                if (Row < 0 || Col < 0)
                 {
                     return false;
                 }
-                if(Row >= rowCount || Col >= colCount)
+
+                if (Row >= rows || Col >= cols)
                 {
                     return false;
                 }
 
                 return true;
             }
-
         }
+
 
         static void Main(string[] args)
         {
             int n = int.Parse(Console.ReadLine());
             char[,] matrix = new char[n, n];
             Read(matrix);
-            var player = GetPlayerPosition(matrix);
+            var player = GetPosition(matrix);
+            bool outOfBakery = false;
 
             int firstPortalRow = -1;
             int firstPortalCol = -1;
@@ -46,20 +49,17 @@ namespace P02.Seeling
             int secondPortalCol = -1;
 
             int count = 0;
-            int money = 0;
-
-            for(int row = 0; row < matrix.GetLength(0); row++)
+            for (int row = 0; row < matrix.GetLength(0); row++)
             {
-                for(int col = 0; col < matrix.GetLength(1); col++)
+                for (int col = 0; col < matrix.GetLength(1); col++)
                 {
-                    if(matrix[row, col] == 'O' && count == 0)
+                    if (matrix[row, col] == 'O' && count == 0)
                     {
                         firstPortalRow = row;
                         firstPortalCol = col;
                         count++;
                     }
-
-                    if(matrix[row, col] == 'O' && count == 1)
+                    if (matrix[row, col] == 'O' && count == 1)
                     {
                         secondPortalRow = row;
                         secondPortalCol = col;
@@ -67,21 +67,19 @@ namespace P02.Seeling
                 }
             }
 
+            int sum = 0;
             while (true)
             {
                 string command = Console.ReadLine();
 
                 matrix[player.Row, player.Col] = '-';
-
-                if(command == "left")
+                if (command == "left")
                 {
                     player.Col--;
-                    if(!player.IsSafe(n, n))
+                    if (!player.IsSafe(n, n))
                     {
-                        Console.WriteLine($"Bad news, you are out of the bakery.");
-                        Console.WriteLine($"Money: {money}");
-                        Print(matrix);
-                        return;
+                        outOfBakery = true;
+                        break;
                     }
                 }
                 if (command == "right")
@@ -89,21 +87,17 @@ namespace P02.Seeling
                     player.Col++;
                     if (!player.IsSafe(n, n))
                     {
-                        Console.WriteLine($"Bad news, you are out of the bakery.");
-                        Console.WriteLine($"Money: {money}");
-                        Print(matrix);
-                        return;
+                        outOfBakery = true;
+                        break;
                     }
                 }
-                if (command == "Up")
+                if (command == "up")
                 {
                     player.Row--;
                     if (!player.IsSafe(n, n))
                     {
-                        Console.WriteLine($"Bad news, you are out of the bakery.");
-                        Console.WriteLine($"Money: {money}");
-                        Print(matrix);
-                        return;
+                        outOfBakery = true;
+                        break;
                     }
                 }
                 if (command == "down")
@@ -111,15 +105,12 @@ namespace P02.Seeling
                     player.Row++;
                     if (!player.IsSafe(n, n))
                     {
-                        Console.WriteLine($"Bad news, you are out of the bakery.");
-                        Console.WriteLine($"Money: {money}");
-                        Print(matrix);
-                        return;
+                        outOfBakery = true;
+                        break;
                     }
                 }
 
-
-                if(matrix[player.Row, player.Col] == 'O')
+                if (matrix[player.Row, player.Col] == 'O')
                 {
                     matrix[player.Row, player.Col] = '-';
                     if (matrix[player.Row, player.Col] == matrix[firstPortalRow, firstPortalCol])
@@ -127,41 +118,53 @@ namespace P02.Seeling
                         player.Row = secondPortalRow;
                         player.Col = secondPortalCol;
                     }
-                    else if(matrix[player.Row, player.Col] == matrix[secondPortalRow, secondPortalCol])
+                    else if (matrix[player.Row, player.Col] == matrix[secondPortalRow, secondPortalCol])
                     {
                         player.Row = firstPortalRow;
                         player.Col = firstPortalCol;
                     }
                 }
 
-                if(Char.IsDigit(matrix[player.Row, player.Col]))
+                if (Char.IsDigit(matrix[player.Row, player.Col]))
                 {
-                  string number = matrix[player.Row, player.Col].ToString();
-                    money += int.Parse(number);
-
+                    string number = matrix[player.Row, player.Col].ToString();
+                    sum += int.Parse(number);
                 }
 
                 matrix[player.Row, player.Col] = 'S';
-                if(money >= 50)
+
+                if (sum >= 50)
                 {
-                    Console.WriteLine($"Good news! You succeeded in collecting enough money!");
-                    Console.WriteLine($"Money: {money}");
-                    Print(matrix);
-                    return;
+                    break;
                 }
+
             }
 
+            StringBuilder sb = new StringBuilder();
 
+            if (outOfBakery)
+            {
+                sb.AppendLine($"Bad news, you are out of the bakery.");
+            }
+            else
+            {
+                sb.AppendLine($"Good news! You succeeded in collecting enough money!");
+            }
+
+            sb.AppendLine($"Money: {sum}");
+            Console.WriteLine(sb.ToString().TrimEnd());
+
+            Print(matrix);
         }
 
-        static Position GetPlayerPosition(char[,] matrix)
+        private static Position GetPosition(char[,] matrix)
         {
             Position position = null;
-            for(int row = 0; row < matrix.GetLength(0); row++)
+            for (int row = 0; row < matrix.GetLength(0); row++)
             {
-                for(int col = 0; col < matrix.GetLength(1); col++)
+                for (int col = 0; col < matrix.GetLength(1); col++)
                 {
-                    if(matrix[row, col] == 'S')
+                    if (matrix[row, col] == 'S')
                     {
                         position = new Position(row, col);
                     }
@@ -173,10 +176,10 @@ namespace P02.Seeling
 
         private static void Read(char[,] matrix)
         {
-            for(int row = 0; row < matrix.GetLength(0); row++)
+            for (int row = 0; row < matrix.GetLength(0); row++)
             {
                 string line = Console.ReadLine();
-                for(int col = 0; col < matrix.GetLength(1); col++)
+                for (int col = 0; col < matrix.GetLength(1); col++)
                 {
                     matrix[row, col] = line[col];
                 }
@@ -185,9 +188,9 @@ namespace P02.Seeling
 
         private static void Print(char[,] matrix)
         {
-            for(int row = 0; row < matrix.GetLength(0); row++)
+            for (int row = 0; row < matrix.GetLength(0); row++)
             {
-                for(int col = 0; col < matrix.GetLength(1); col++)
+                for (int col = 0; col < matrix.GetLength(1); col++)
                 {
                     Console.Write(matrix[row, col]);
                 }
