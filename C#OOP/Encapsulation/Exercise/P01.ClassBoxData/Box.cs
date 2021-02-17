@@ -5,7 +5,7 @@ namespace P01.ClassBoxData
     public class Box
     {
 
-        private const double SIDE_MIN_VALUE = 0;
+        private const double SIDE_MIN_VALUE = 1;
         //private const string INVALID_SIDE = "{0} cannot be zero or negative.";
         private double length;
         private double width;
@@ -27,7 +27,7 @@ namespace P01.ClassBoxData
             }
             private set
             {
-                if(value <= SIDE_MIN_VALUE)
+                if(value < SIDE_MIN_VALUE)
                 {
                     throw new ArgumentException("Length cannot be zero or negative.");
                 }
@@ -45,7 +45,7 @@ namespace P01.ClassBoxData
             }
             private set
             {
-                if (value <= SIDE_MIN_VALUE)
+                if (value < SIDE_MIN_VALUE)
                 {
                     throw new ArgumentException("Height cannot be zero or negative.");
                 }
@@ -62,7 +62,7 @@ namespace P01.ClassBoxData
             }
             private set
             {
-                if (value <= SIDE_MIN_VALUE)
+                if (value < SIDE_MIN_VALUE)
                 {
                     throw new ArgumentException("Width cannot be zero or negative.");
                 }

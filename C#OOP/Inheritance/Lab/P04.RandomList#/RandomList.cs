@@ -1,27 +1,22 @@
 ﻿using System;
-using System.Collections;
-
+using System.Collections.Generic;
 
 namespace CustomRandomList
 {
 
-    public class RandomList : ArrayList
+    public class RandomList : List<string>
     {
 
         private Random random;
 
-        public RandomList()
-        { 
-            this.random = new Random();
-        }
-
-        public int RandomInt()
+        public string RandomString()
         {
-            return this.random.Next();
+            int index = random.Next(0, this.Count);
+            string element = this[index];
+            this.RemoveAt(index);
+
+            return element;
         }
-
-
-        public int RandomString() =>  this.RandomInt();
 
     }
 }
