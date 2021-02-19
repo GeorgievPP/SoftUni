@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Text;
 
-namespace P02.Bee3._0
+namespace P02.Bee
 {
     class Program
     {
-
         public class Position
         {
             public Position(int row, int col)
@@ -12,17 +12,19 @@ namespace P02.Bee3._0
                 Row = row;
                 Col = col;
             }
+
             public int Row { get; set; }
 
             public int Col { get; set; }
 
+
             public bool IsSafe(int rowCount, int colCount)
             {
-                if(Row < 0 || Col < 0)
+                if (Row < 0 || Col < 0)
                 {
                     return false;
                 }
-                if(Row >= rowCount || Col >= colCount)
+                if (Row >= rowCount || Col >= colCount)
                 {
                     return false;
                 }
@@ -38,19 +40,19 @@ namespace P02.Bee3._0
             char[,] matrix = new char[n, n];
             Read(matrix);
             var player = GetPlayerPosition(matrix);
-
-            int countFlowers = 0;
+            int fwollersCount = 0;
+            StringBuilder sb = new StringBuilder();
 
             string command;
-            while((command = Console.ReadLine()) != "End")
+            while ((command = Console.ReadLine()) != "End")
             {
                 matrix[player.Row, player.Col] = '.';
-                if(command == "left")
+                if (command == "left")
                 {
                     player.Col--;
-                    if(!player.IsSafe(n, n))
+                    if (!player.IsSafe(n, n))
                     {
-                        Console.WriteLine($"The bee got lost!");
+                        sb.AppendLine($"The bee got lost!");
                         break;
                     }
                 }
@@ -59,7 +61,7 @@ namespace P02.Bee3._0
                     player.Col++;
                     if (!player.IsSafe(n, n))
                     {
-                        Console.WriteLine($"The bee got lost!");
+                        sb.AppendLine($"The bee got lost!");
                         break;
                     }
                 }
@@ -68,7 +70,7 @@ namespace P02.Bee3._0
                     player.Row--;
                     if (!player.IsSafe(n, n))
                     {
-                        Console.WriteLine($"The bee got lost!");
+                        sb.AppendLine($"The bee got lost!");
                         break;
                     }
                 }
@@ -77,12 +79,13 @@ namespace P02.Bee3._0
                     player.Row++;
                     if (!player.IsSafe(n, n))
                     {
-                        Console.WriteLine($"The bee got lost!");
+                        sb.AppendLine($"The bee got lost!");
                         break;
                     }
                 }
 
-                if(matrix[player.Row, player.Col] == 'O')
+
+                if (matrix[player.Row, player.Col] == 'O')
                 {
                     matrix[player.Row, player.Col] = '.';
                     if (command == "left")
@@ -90,7 +93,7 @@ namespace P02.Bee3._0
                         player.Col--;
                         if (!player.IsSafe(n, n))
                         {
-                            Console.WriteLine($"The bee got lost!");
+                            sb.AppendLine($"The bee got lost!");
                             break;
                         }
                     }
@@ -99,7 +102,7 @@ namespace P02.Bee3._0
                         player.Col++;
                         if (!player.IsSafe(n, n))
                         {
-                            Console.WriteLine($"The bee got lost!");
+                            sb.AppendLine($"The bee got lost!");
                             break;
                         }
                     }
@@ -108,7 +111,7 @@ namespace P02.Bee3._0
                         player.Row--;
                         if (!player.IsSafe(n, n))
                         {
-                            Console.WriteLine($"The bee got lost!");
+                            sb.AppendLine($"The bee got lost!");
                             break;
                         }
                     }
@@ -117,41 +120,43 @@ namespace P02.Bee3._0
                         player.Row++;
                         if (!player.IsSafe(n, n))
                         {
-                            Console.WriteLine($"The bee got lost!");
+                            sb.AppendLine($"The bee got lost!");
                             break;
                         }
                     }
                 }
 
-                if(matrix[player.Row, player.Col] == 'f')
+                if (matrix[player.Row, player.Col] == 'f')
                 {
-                    countFlowers++;
+                    fwollersCount++;
                 }
 
                 matrix[player.Row, player.Col] = 'B';
+
             }
 
-            if(countFlowers >= 5)
+            if (fwollersCount >= 5)
             {
-                Console.WriteLine($"Great job, the bee managed to pollinate {countFlowers} flowers!");
+                sb.AppendLine($"Great job, the bee managed to pollinate {fwollersCount} flowers!");
             }
             else
             {
-                Console.WriteLine($"The bee couldn't pollinate the flowers, she needed {5 - countFlowers} flowers more");
+                fwollersCount = 5 - fwollersCount;
+                sb.AppendLine($"The bee couldn't pollinate the flowers, she needed {fwollersCount} flowers more");
             }
 
+            Console.WriteLine(sb.ToString().TrimEnd());
             Print(matrix);
-
         }
 
-        static Position GetPlayerPosition(char[,] matrix)
+        private static Position GetPlayerPosition(char[,] matrix)
         {
             Position position = null;
-            for(int row = 0; row < matrix.GetLength(0); row++)
+            for (int row = 0; row < matrix.GetLength(1); row++)
             {
-                for(int col = 0; col < matrix.GetLength(1); col++)
+                for (int col = 0; col < matrix.GetLength(1); col++)
                 {
-                    if(matrix[row, col] == 'B')
+                    if (matrix[row, col] == 'B')
                     {
                         position = new Position(row, col);
                     }
