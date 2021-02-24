@@ -76,7 +76,7 @@ namespace P04.PizzaCalories.Models
                     throw new ArgumentException("Invalid type of dough.");
                 }
 
-                this.flourType = value;
+                this.bakingTehnique = value;
             }
         }
 
