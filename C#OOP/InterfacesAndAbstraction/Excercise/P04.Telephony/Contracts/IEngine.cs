@@ -1,7 +1,6 @@
-﻿
-namespace P04.Telephony.Contracts
+﻿namespace P03.Telephony.Contracts
 {
-    public interface IEngine 
+    public interface IEngine
     {
         void Run();
     }

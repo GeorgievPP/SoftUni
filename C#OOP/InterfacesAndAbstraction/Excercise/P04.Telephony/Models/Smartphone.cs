@@ -1,25 +1,17 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
-using P04.Telephony.Contracts;
-using P04.Telephony.Exceptions;
+using P03.Telephony.Contracts;
+using P03.Telephony.Exceptions;
 
-namespace P04.Telephony.Models
+
+namespace P03.Telephony.Models
 {
     public class Smartphone : ICallable, IBrowseable
     {
-        public string Call(string number)
-        {
-           if(!number.All(ch => char.IsDigit(ch)))
-           {
-               throw new InvalidNumberException();
-           }
-
-            return $"Calling... {number}";
-        }
-      
         public string Browse(string url)
         {
-            if(url.Any(ch => char.IsDigit(ch)))
+            if(url.Any(t => Char.IsDigit(t)))
             {
                 throw new InvalidURLException();
             }
@@ -27,5 +19,14 @@ namespace P04.Telephony.Models
             return $"Browsing: {url}!";
         }
 
+        public string Call(string number)
+        {
+            if(!number.All(n => Char.IsDigit(n)))
+            {
+                throw new InvalidNumberException();
+            }
+
+            return $"Calling... {number}";
+        }
     }
 }

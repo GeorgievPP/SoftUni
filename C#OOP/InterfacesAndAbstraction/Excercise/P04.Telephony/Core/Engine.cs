@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Linq;
 
-using P04.Telephony.Contracts;
-using P04.Telephony.Models;
-using P04.Telephony.Exceptions;
+using P03.Telephony.Contracts;
+using P03.Telephony.Exceptions;
+using P03.Telephony.Models;
 
-namespace P04.Telephony.Core
+namespace P03.Telephony.Core
 {
     public class Engine : IEngine
     {
@@ -26,59 +25,42 @@ namespace P04.Telephony.Core
             this.reader = reader;
             this.writer = writer;
         }
+
         public void Run()
         {
-            string[] phoneNumbers = reader.ReadLine()
-                .Split(' ', StringSplitOptions.RemoveEmptyEntries)
-                .ToArray();
-
-            string[] sites = reader.ReadLine()
-                .Split(' ', StringSplitOptions.RemoveEmptyEntries)
-                .ToArray();
+            string[] phoneNumbers = reader.ReadLine().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            string[] sites = reader.ReadLine().Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
             foreach(var number in phoneNumbers)
             {
                 try
                 {
-                     if(number.Length <= 7)
-                     {
-                         writer.WriteLine(stationaryPhone.Call(number));
-                     }
-                    
-                     else if(number.Length >= 10)
-                     {
-                         writer.WriteLine(smartphone.Call(number));
-                     }
-                    
-                    //  else
-                    //  {
-                    //      throw new InvalidNumberException();
-                    //  }
-
-                   
-
+                    if(number.Length <= 7)
+                    {
+                        writer.WriteLine(stationaryPhone.Call(number));
+                    }
+                    else if(number.Length >= 10)
+                    {
+                        writer.WriteLine(smartphone.Call(number));
+                    }
                 }
                 catch(InvalidNumberException ine)
                 {
                     writer.WriteLine(ine.Message);
                 }
-
             }
 
-            foreach (var url in sites)
+            foreach(var url in sites)
             {
                 try
                 {
                     writer.WriteLine(smartphone.Browse(url));
                 }
-                catch (InvalidURLException iue)
+                catch(InvalidURLException iue)
                 {
                     writer.WriteLine(iue.Message);
                 }
-
             }
-
         }
-
     }
 }

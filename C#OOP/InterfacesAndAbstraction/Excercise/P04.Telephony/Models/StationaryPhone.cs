@@ -1,19 +1,16 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
-using P04.Telephony.Contracts;
-using P04.Telephony.Exceptions;
+using P03.Telephony.Contracts;
+using P03.Telephony.Exceptions;
 
-namespace P04.Telephony.Models
+namespace P03.Telephony.Models
 {
     public class StationaryPhone : ICallable
     {
-        public StationaryPhone()
-        {
-                
-        }
         public string Call(string number)
         {
-            if(!number.All(ch => char.IsDigit(ch)))
+            if(!number.All(n => Char.IsDigit(n)))
             {
                 throw new InvalidNumberException();
             }

@@ -1,19 +1,18 @@
-﻿using P04.Telephony.Contracts;
-using P04.Telephony.IO;
-using P04.Telephony.Core;
+﻿using P03.Telephony.Contracts;
+using P03.Telephony.Core;
+using P03.Telephony.IO;
 
-namespace P04.Telephony
+namespace P03.Telephony
 {
     public class StartUp
     {
         static void Main(string[] args)
         {
-
             IReader reader = new ConsoleReader();
             IWriter writer = new ConsoleWriter();
-
             IEngine engine = new Engine(reader, writer);
             engine.Run();
+
         }
     }
 }

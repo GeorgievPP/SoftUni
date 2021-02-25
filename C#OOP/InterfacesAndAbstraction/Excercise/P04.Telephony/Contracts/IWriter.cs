@@ -1,5 +1,4 @@
-﻿
-namespace P04.Telephony.Contracts
+﻿namespace P03.Telephony.Contracts
 {
     public interface IWriter
     {

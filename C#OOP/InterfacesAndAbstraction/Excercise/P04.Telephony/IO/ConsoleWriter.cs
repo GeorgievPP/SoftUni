@@ -1,8 +1,7 @@
 ﻿using System;
+using P03.Telephony.Contracts;
 
-using P04.Telephony.Contracts;
-
-namespace P04.Telephony.IO
+namespace P03.Telephony.IO
 {
     public class ConsoleWriter : IWriter
     {
