@@ -23,7 +23,9 @@ namespace WarCroft.Entities.Characters.Contracts
         {
             this.Name = name;
             this.BaseHealth = health;
+            this.health = health;
             this.BaseArmor = armor;
+            this.Armor = armor;
             this.AbilityPoints = abilityPoints;
             this.Bag = bag;
         }

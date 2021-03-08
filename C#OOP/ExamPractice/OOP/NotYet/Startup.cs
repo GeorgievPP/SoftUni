@@ -4,7 +4,9 @@ using WarCroft.Core.IO;
 using WarCroft.Core.IO.Contracts;
 
 namespace WarCroft
-{
+{   /// <summary>
+/// 1. 45/50 ... 2. 117/150
+/// </summary>
 	public class StartUp
 	{
 		public static void Main(string[] args)
@@ -17,13 +19,13 @@ namespace WarCroft
 
                 /* Use the below configuration instead of the usual one if you wish to print all output messages together after the inputs for easier comparison with the example output. */
 
-            //IReader reader = new ConsoleReader();
-            //var sbWriter = new StringBuilderWriter();
-
-            //var engine = new Engine(reader, sbWriter);
-            //engine.Run();
-
-            //Console.WriteLine(sbWriter.sb.ToString().Trim());
+         //IReader reader = new ConsoleReader();
+         //var sbWriter = new StringBuilderWriter();
+         //
+         //var engine = new Engine(reader, sbWriter);
+         //engine.Run();
+         //
+         //Console.WriteLine(sbWriter.sb.ToString().Trim());
         }
 	}
 }

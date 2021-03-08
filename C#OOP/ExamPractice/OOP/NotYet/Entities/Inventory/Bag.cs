@@ -13,14 +13,10 @@ namespace WarCroft.Entities.Inventory
 
         public Bag(int capacity)
         {
+            this.items = new List<Item>();
             this.Capacity = capacity;
         }
 
-
-        public Bag()
-        {
-            this.items = new List<Item>();
-        }
 
         public int Capacity 
         {
