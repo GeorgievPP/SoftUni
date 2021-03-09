@@ -6,15 +6,15 @@ using WarCroft.Entities.Items;
 
 namespace WarCroft.Entities.Inventory
 {
-    public class Bag : IBag
+    public abstract class Bag : IBag
     {
         private int capacity;
-        private readonly List<Item> items;
+        private List<Item> items;
 
-        public Bag(int capacity)
+        public Bag(int capacity = 100)
         {
-            this.items = new List<Item>();
             this.Capacity = capacity;
+            this.items = new List<Item>();
         }
 
 
@@ -23,12 +23,12 @@ namespace WarCroft.Entities.Inventory
             get { return this.capacity; }
             set
             {
-                this.capacity = 100;
+                this.capacity = value;
             }
         }
 
         public int Load 
-            => this.items.Sum(x => x.Weight);
+            => this.Items.Sum(x => x.Weight);
 
         public IReadOnlyCollection<Item> Items 
             => this.items;
@@ -45,7 +45,7 @@ namespace WarCroft.Entities.Inventory
 
         public Item GetItem(string name)
         {
-            if (!this.items.Any())
+            if (this.Items.Count == 0)
             {
                 throw new InvalidOperationException("Bag is empty!");
              

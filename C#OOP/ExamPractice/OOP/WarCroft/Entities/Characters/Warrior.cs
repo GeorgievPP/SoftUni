@@ -15,19 +15,13 @@ namespace WarCroft.Entities.Characters
 
         public void Attack(Character character)
         {
-            if( this.Name == character.Name)
+            this.EnsureAlive();
+            character.EnsureAlive();
+
+            if( this == character)
             {
                 throw new InvalidOperationException("Cannot attack self!");
             }
-
-            this.EnsureAlive();
-
-
-            if (!character.IsAlive)
-            {
-                throw new InvalidOperationException(ExceptionMessages.AffectedCharacterDead);
-            }
-
 
             character.TakeDamage(this.AbilityPoints);
         }

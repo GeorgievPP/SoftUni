@@ -15,7 +15,9 @@ namespace WarCroft.Entities.Characters.Contracts
         private double health;
         private double baseArmor;
         private double armor;
+        private double abilityPoints;
         private Bag bag;
+        private bool isAlive;
 
 
 
@@ -28,6 +30,7 @@ namespace WarCroft.Entities.Characters.Contracts
             this.Armor = armor;
             this.AbilityPoints = abilityPoints;
             this.Bag = bag;
+            this.IsAlive = true;
         }
 
         public string Name
@@ -57,12 +60,10 @@ namespace WarCroft.Entities.Characters.Contracts
         public double Health
         {
             get { return this.health; }
-            set
+            private set
             {
-                if (value >= 0 && value <= this.baseHealth)
-                {
-                    this.health = value;
-                }
+                this.health = value;
+              
             }
         }
 
@@ -81,15 +82,16 @@ namespace WarCroft.Entities.Characters.Contracts
             get { return this.armor; }
             private set
             {
-                if (value >= 0)
-                {
-                    this.armor = value;
-                }
+                 this.armor = value;
             }
         }
 
 
-        public double AbilityPoints { get; private set; }
+        public double AbilityPoints
+        {
+            get { return this.abilityPoints; }
+            private set { this.abilityPoints = value; }
+        }
 
         public Bag Bag
         {
@@ -101,9 +103,13 @@ namespace WarCroft.Entities.Characters.Contracts
         }
 
 
-        public bool IsAlive { get; set; } = true;
+        public bool IsAlive
+        {
+            get { return isAlive; }
+            private set { isAlive = value; }
+        }
 
-        protected void EnsureAlive()
+        internal void EnsureAlive()
         {
             if (!this.IsAlive)
             {
@@ -113,56 +119,45 @@ namespace WarCroft.Entities.Characters.Contracts
 
         public void TakeDamage(double hitPoints)
         {
-            if (this.IsAlive)
-            {
-                if (this.Armor >= hitPoints)
-                {
-                    this.Armor -= hitPoints;
-                    return;
-                }
-                else
-                {
-                    if (this.Armor != 0)
-                    {
-                        hitPoints -= this.Armor;
-                        this.Armor = 0;
-                    }
+            this.EnsureAlive();
 
-                    if (this.Health > hitPoints)
-                    {
-                        this.Health -= hitPoints;
-                    }
-                    else
-                    {
-                        this.Health = 0;
-                        this.IsAlive = false;
-                    }
-                }
-            }
-            else
+            if(this.Armor < hitPoints)
             {
-                this.EnsureAlive();
+                hitPoints -= this.Armor;
+                this.Armor = 0;
+                this.Health -= hitPoints;
+
+                if(this.Health <= 0)
+                {
+                    this.IsAlive = false;
+                    this.Health = 0;
+                }
+
+                return;
             }
+
+            this.Armor -= hitPoints;
         }
 
         public void UseItem(Item item)
         {
+            this.EnsureAlive();
+            item.AffectCharacter(this);
+        }
 
+        internal void IncreaseHealth(double points)
+        {
+            this.Health = Math.Min(BaseHealth, Health + points);
+        }
 
-            if (item.GetType().Name == "HealthPotion")
+        internal void ReduceHealth(int amount)
+        {
+            this.Health = Math.Max(0, this.Health - amount);
+
+            if (Health <= 0)
             {
-                var item2 = new HealthPotion();
-                item2.AffectCharacter(this);
-                this.Bag.GetItem(item2.GetType().Name);
+                this.IsAlive = false;
             }
-            else if (item.GetType().Name == "FirePotion")
-            {
-                var item2 = new FirePotion();
-                item2.AffectCharacter(this);
-                this.Bag.GetItem(item2.GetType().Name);
-            }
-
-
         }
 
     }
