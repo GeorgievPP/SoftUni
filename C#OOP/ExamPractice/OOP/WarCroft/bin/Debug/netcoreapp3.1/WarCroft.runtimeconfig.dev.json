@@ -1,8 +1,0 @@
-{
-  "runtimeOptions": {
-    "additionalProbingPaths": [
-      "C:\\Users\\calev\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\calev\\.nuget\\packages"
-    ]
-  }
-}
