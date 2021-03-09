@@ -1,18 +1,85 @@
 ﻿using Bakery.Models.Drinks.Contracts;
+using Bakery.Utilities.Messages;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Bakery.Models.Drinks
 {
-    public class Drink : IDrink
+    public abstract class Drink : IDrink
     {
-        public string Name => throw new NotImplementedException();
+        private string name;
+        private int portion;
+        private decimal price;
+        private string brand;
 
-        public int Portion => throw new NotImplementedException();
+        public Drink(string name, int portion, decimal price, string brand)
+        {
+            this.Name = name;
+            this.Portion = portion;
+            this.Price = price;
+            this.Brand = brand;
+        }
 
-        public decimal Price => throw new NotImplementedException();
+        public string Name
+        {
+            get { return this.name; }
+            private set
+            {
+                if (String.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException(ExceptionMessages.InvalidName);
+                }
 
-        public string Brand => throw new NotImplementedException();
+                this.name = value;
+            }
+        }
+
+        public int Portion
+        {
+            get { return this.portion; }
+            private set
+            {
+                if (value <= 0)
+                {
+                    throw new ArgumentException(ExceptionMessages.InvalidPortion);
+                }
+
+                this.portion = value;
+            }
+        }
+
+        public decimal Price
+        {
+            get { return this.price; }
+            private set
+            {
+                if (value <= 0)
+                {
+                    throw new ArgumentException(ExceptionMessages.InvalidPrice);
+                }
+
+                this.price = value;
+            }
+        }
+
+        public string Brand
+        {
+            get { return this.brand; }
+            private set
+            {
+                if (String.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException(ExceptionMessages.InvalidBrand);
+                }
+
+                this.brand = value;
+            }
+        }
+
+        public override string ToString()
+        {
+            return $"{this.Name} {this.Brand} - {this.Portion}ml - {this.Price:F2}lv";
+        }
     }
 }

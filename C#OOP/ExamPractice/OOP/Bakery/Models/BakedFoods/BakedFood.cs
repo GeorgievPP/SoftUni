@@ -57,7 +57,7 @@ namespace Bakery.Models.BakedFoods
                     throw new ArgumentException(ExceptionMessages.InvalidPrice);
                 }
 
-                this.price = 0;
+                this.price = value;
             }
         }
 
