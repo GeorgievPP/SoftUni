@@ -4,7 +4,10 @@
     using System.Linq;
     using System.Text;
     using Contracts;
+    using PlayersAndMonsters.Core.Factories;
+    using PlayersAndMonsters.Core.Factories.Contracts;
     using PlayersAndMonsters.Models.BattleFields;
+    using PlayersAndMonsters.Models.BattleFields.Contracts;
     using PlayersAndMonsters.Models.Cards;
     using PlayersAndMonsters.Models.Cards.Contracts;
     using PlayersAndMonsters.Models.Players;
@@ -16,46 +19,36 @@
     {
         private IPlayerRepository playerRepository;
         private ICardRepository cardRepository;
-      // private ICardRepository playerCards;
 
-        public ManagerController()
+        private IPlayerFactory playerFactory;
+        private ICardFactory cardFactory;
+
+        private IBattleField battleField;
+
+        public ManagerController(IPlayerRepository playerRepository,
+            IPlayerFactory playerFactory,
+            ICardFactory cardFactory,
+            ICardRepository cardRepository,
+            IBattleField battleField)
         {
-            this.playerRepository = new PlayerRepository();
-            this.cardRepository = new CardRepository();
-           // this.playerCards = new CardRepository();
+            this.playerRepository = playerRepository;
+            this.playerFactory = playerFactory;
+            this.cardFactory = cardFactory;
+            this.cardRepository = cardRepository;
+            this.battleField = battleField;
         }
 
         public string AddPlayer(string type, string username)
         {
-            IPlayer player = null;
-            ICardRepository playerCards = new CardRepository();
-            if(type == nameof(Beginner))
-            {
-                player = new Beginner(playerCards, username);
-            }
-            else if(type == nameof(Advanced))
-            {
-                player = new Advanced(playerCards, username);
-            }
-
+            var player = this.playerFactory.CreatePlayer(type, username);
             this.playerRepository.Add(player);
 
             return $"Successfully added player of type {type} with username: {username}";
-
         }
 
         public string AddCard(string type, string name)
         {
-            ICard card = null;
-            if(type == "Magic")
-            {
-                card = new MagicCard(name);
-            }
-            else if(type == "Trap")
-            {
-                card = new TrapCard(name);
-            }
-
+            var card = this.cardFactory.CreateCard(type, name);
             this.cardRepository.Add(card);
 
             return $"Successfully added card of type {type}Card with name: {name}";
@@ -81,8 +74,7 @@
             var attacker = this.playerRepository.Find(attackUser);
             var enemy = this.playerRepository.Find(enemyUser);
 
-            var battleField = new BattleField();
-            battleField.Fight(attacker, enemy);
+            this.battleField.Fight(attacker, enemy);
 
             return $"Attack user health {attacker.Health} - Enemy user health {enemy.Health}";
         }

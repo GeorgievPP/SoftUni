@@ -9,9 +9,9 @@ namespace PlayersAndMonsters.Core
     {
         private IManagerController controller;
 
-        public Engine()
+        public Engine(IManagerController managerController)
         {
-            this.controller = new ManagerController();
+            this.controller = managerController;
         }
 
         public void Run()

@@ -11,7 +11,7 @@ namespace PlayersAndMonsters.Models.Players
         private string username;
         private int health;
         //private ICardRepository cardRepository;  1 greshka;
-        private bool isDead;
+       // private bool isDead;
 
         public Player(ICardRepository cardRepository, string username, int health)
         {
