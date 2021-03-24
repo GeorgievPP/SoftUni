@@ -1,4 +1,5 @@
-﻿using PlayersAndMonsters.Models.Players.Contracts;
+﻿using PlayersAndMonsters.Models.Cards.Contracts;
+using PlayersAndMonsters.Models.Players.Contracts;
 using PlayersAndMonsters.Repositories.Contracts;
 using System;
 using System.Collections.Generic;
@@ -10,25 +11,30 @@ namespace PlayersAndMonsters.Models.Players
     {
         private string username;
         private int health;
-        //private ICardRepository cardRepository;  1 greshka;
-       // private bool isDead;
+        private ICardRepository cardRepository;
 
         public Player(ICardRepository cardRepository, string username, int health)
         {
             this.CardRepository = cardRepository;
             this.Username = username;
             this.Health = health;
-
         }
 
-        public ICardRepository CardRepository {get;}
+        public ICardRepository CardRepository
+        {
+            get => this.cardRepository;
+            private set
+            {
+                this.cardRepository = value;
+            }
+        }
 
         public string Username
         {
-            get { return this.username; }
+            get => this.username;
             private set
             {
-                if (String.IsNullOrEmpty(value))
+                if (String.IsNullOrWhiteSpace(value))
                 {
                     throw new ArgumentException("Player's username cannot be null or an empty string. ");
                 }
@@ -39,12 +45,12 @@ namespace PlayersAndMonsters.Models.Players
 
         public int Health
         {
-            get { return this.health; }
+            get => this.health;
             set
             {
                 if (value < 0)
                 {
-                    throw new ArgumentException("Player's health bonus cannot be less than zero.");
+                    throw new ArgumentException("Player's health bonus cannot be less than zero. ");
                 }
 
                 this.health = value;
@@ -52,25 +58,23 @@ namespace PlayersAndMonsters.Models.Players
         }
 
         public bool IsDead => this.Health <= 0;
-       
 
         public void TakeDamage(int damagePoints)
         {
-            if(damagePoints < 0)
+            if (damagePoints < 0)
             {
                 throw new ArgumentException("Damage points cannot be less than zero.");
             }
 
-            //if (this.Health - damagePoints < 0)
-            //{
-            //    this.Health = 0;
-            //}
-            //else
-            //{
-            //    this.Health -= damagePoints;
-            //}
+            if(this.Health - damagePoints < 0)
+            {
+                this.Health = 0;
+            }
+            else
+            {
+                this.Health -= damagePoints;
+            }
 
-            this.Health = Math.Max(this.Health - damagePoints, 0);
         }
     }
 }

@@ -9,7 +9,7 @@
         int Count { get; }
 
         IReadOnlyCollection<IPlayer> Players { get; }
-        object Any { get; }
+
 
         void Add(IPlayer player);
 

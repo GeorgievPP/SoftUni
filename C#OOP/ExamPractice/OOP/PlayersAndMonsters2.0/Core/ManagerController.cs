@@ -1,46 +1,33 @@
 ﻿namespace PlayersAndMonsters.Core
 {
     using System;
-    using System.Linq;
     using System.Text;
     using Contracts;
     using PlayersAndMonsters.Core.Factories;
     using PlayersAndMonsters.Core.Factories.Contracts;
     using PlayersAndMonsters.Models.BattleFields;
     using PlayersAndMonsters.Models.BattleFields.Contracts;
-    using PlayersAndMonsters.Models.Cards;
-    using PlayersAndMonsters.Models.Cards.Contracts;
-    using PlayersAndMonsters.Models.Players;
     using PlayersAndMonsters.Models.Players.Contracts;
     using PlayersAndMonsters.Repositories;
     using PlayersAndMonsters.Repositories.Contracts;
 
     public class ManagerController : IManagerController
     {
-        private IPlayerRepository playerRepository;
         private ICardRepository cardRepository;
-
-        private IPlayerFactory playerFactory;
-        private ICardFactory cardFactory;
-
+        private IPlayerRepository playerRepository;
         private IBattleField battleField;
 
-        public ManagerController(IPlayerRepository playerRepository,
-            IPlayerFactory playerFactory,
-            ICardFactory cardFactory,
-            ICardRepository cardRepository,
-            IBattleField battleField)
+        public ManagerController()
         {
-            this.playerRepository = playerRepository;
-            this.playerFactory = playerFactory;
-            this.cardFactory = cardFactory;
-            this.cardRepository = cardRepository;
-            this.battleField = battleField;
+            this.cardRepository = new CardRepository();
+            this.playerRepository = new PlayerRepository();
+            this.battleField = new BattleField();
         }
 
         public string AddPlayer(string type, string username)
         {
-            var player = this.playerFactory.CreatePlayer(type, username);
+            IPlayer player = new PlayerFactory().CreatePlayer(type, username);
+
             this.playerRepository.Add(player);
 
             return $"Successfully added player of type {type} with username: {username}";
@@ -48,7 +35,8 @@
 
         public string AddCard(string type, string name)
         {
-            var card = this.cardFactory.CreateCard(type, name);
+            var card = new CardFactory().CreateCard(type, name);
+
             this.cardRepository.Add(card);
 
             return $"Successfully added card of type {type}Card with name: {name}";
@@ -59,11 +47,6 @@
             var player = this.playerRepository.Find(username);
             var card = this.cardRepository.Find(cardName);
 
-            if(card == null)
-            {
-                return "Card cannot be null!";
-            }
-           
             player.CardRepository.Add(card);
 
             return $"Successfully added card: {cardName} to user: {username}";
@@ -71,23 +54,23 @@
 
         public string Fight(string attackUser, string enemyUser)
         {
-            var attacker = this.playerRepository.Find(attackUser);
-            var enemy = this.playerRepository.Find(enemyUser);
+            var attackPlayer = this.playerRepository.Find(attackUser);
+            var enemyPlayer = this.playerRepository.Find(enemyUser);
 
-            this.battleField.Fight(attacker, enemy);
+            this.battleField.Fight(attackPlayer, enemyPlayer);
 
-            return $"Attack user health {attacker.Health} - Enemy user health {enemy.Health}";
+            return $"Attack user health {attackPlayer.Health} - Enemy user health {enemyPlayer.Health}";
         }
 
         public string Report()
         {
             StringBuilder sb = new StringBuilder();
 
-            foreach(var player in this.playerRepository.Players)
+           foreach(var player in this.playerRepository.Players)
             {
-                sb.AppendLine($"Username: {player.Username} - Health: {player.Health} – Cards {player.CardRepository.Count}");
-
-                foreach(var card in player.CardRepository.Cards)
+                sb.AppendLine($"Username: {player.Username} - Health: {player.Health} - Cards {player.CardRepository.Count}");
+                
+                foreach (var card in player.CardRepository.Cards)
                 {
                     sb.AppendLine($"Card: {card.Name} - Damage: {card.DamagePoints}");
                 }

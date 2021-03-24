@@ -4,9 +4,10 @@ using System.Text;
 
 namespace PlayersAndMonsters.Models.Cards
 {
-    public class MagicCard : Card
+    public class TrapCard : Card
     {
-        public MagicCard(string name) : base(name, 5, 80)
+        public TrapCard(string name) 
+            : base(name, 120, 5)
         {
         }
     }

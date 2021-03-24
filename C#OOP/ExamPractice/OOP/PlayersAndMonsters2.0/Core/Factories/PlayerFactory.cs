@@ -10,21 +10,18 @@ namespace PlayersAndMonsters.Core.Factories
 {
     public class PlayerFactory : IPlayerFactory
     {
+
         public IPlayer CreatePlayer(string type, string username)
         {
-            IPlayer player = null;
-
             switch (type)
             {
                 case "Beginner":
-                    player = new Beginner(new CardRepository(), username);
-                    break;
+                    return new Beginner(new CardRepository(), username);
                 case "Advanced":
-                    player = new Advanced(new CardRepository(), username);
-                    break;
+                    return new Advanced(new CardRepository(), username);
+                default:
+                    throw new InvalidOperationException();
             }
-
-            return player;
         }
     }
 }

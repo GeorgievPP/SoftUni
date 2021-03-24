@@ -11,19 +11,15 @@ namespace PlayersAndMonsters.Core.Factories
     {
         public ICard CreateCard(string type, string name)
         {
-            ICard card = null;
-
             switch (type)
             {
-                case "Trap":
-                    card = new TrapCard(name);
-                    break;
                 case "Magic":
-                    card = new MagicCard(name);
-                    break;
+                    return new MagicCard(name);
+                case "Trap":
+                    return new TrapCard(name);
+                default:
+                    throw new InvalidOperationException();
             }
-
-            return card;
         }
     }
 }
