@@ -1,12 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using VegetableNinja.Interfaces;
 
 namespace VegetableNinja.IO
 {
-    class ConsoleReader
+    public class ConsoleReader : IInputReader
     {
+        public string ReadLine()
+        {
+            return Console.ReadLine();
+        }
     }
 }

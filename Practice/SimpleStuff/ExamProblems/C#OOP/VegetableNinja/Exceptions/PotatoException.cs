@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace VegetableNinja.Exceptions
 {
-    class PotatoException
+    public class PotatoException : Exception
     {
+        public PotatoException(string message) : base(message)
+        {
+        }
     }
 }

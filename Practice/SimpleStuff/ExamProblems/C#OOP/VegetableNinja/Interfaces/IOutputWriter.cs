@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace VegetableNinja.Interfaces
 {
-    interface IOutputWriter
+    public interface IOutputWriter
     {
+        void WriteLine(string output);
+
+        void Wrtite(string output);
     }
 }

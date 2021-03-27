@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace VegetableNinja.Interfaces
+﻿namespace VegetableNinja.Interfaces
 {
-    interface IVegetable
+    public interface IVegetable : IGameObject
     {
+        int PowerBonus { get; }
+
+        int StaminaBonus { get; }
+
+        int TimeToGrow { get; }
     }
 }

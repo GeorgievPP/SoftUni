@@ -1,12 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using VegetableNinja.Interfaces;
 
 namespace VegetableNinja.IO
 {
-    class ConsoleWriter
+    public class ConsoleWriter : IOutputWriter
     {
+        public void WriteLine(string output)
+        {
+            Console.WriteLine(output);
+        }
+
+        public void Wrtite(string output)
+        {
+            Console.Write(output);
+        }
     }
 }

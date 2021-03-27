@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace VegetableNinja.Enumerations
+﻿namespace VegetableNinja.Enumerations
 {
-    class VegetableType
+    public enum VegetableType
     {
+        Asparagus,
+        Blank,
+        Broccoli,
+        CherryBerry,
+        Mushroom,
+        Royal,
+        MeloLemonMelon
     }
 }

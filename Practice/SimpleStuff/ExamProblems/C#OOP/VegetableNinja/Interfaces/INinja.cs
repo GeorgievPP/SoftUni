@@ -1,12 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using VegetableNinja.Models;
 
 namespace VegetableNinja.Interfaces
 {
-    interface INinja
+    public interface INinja : IGameObject
     {
+        event OnMeloLemonMelonEatenHandler MeloLemonMelonEaten;
+
+        string Name { get; }
+
+        int Power { get; }
+
+        int Stamina { get; }
+
+        void Move(IMatrixPosition newPosition);
+
+        void CollectVegetable(IVegetable vegetable);
+
+        void EatVegetable();
     }
 }

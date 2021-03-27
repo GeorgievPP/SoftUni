@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace VegetableNinja.Interfaces
+﻿namespace VegetableNinja.Interfaces
 {
-    interface IGameObject
+    public interface IGameObject
     {
+        IMatrixPosition Position { get; }
+
+        char CharValue { get; }
     }
 }

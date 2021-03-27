@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using VegetableNinja.Enumerations;
 
 namespace VegetableNinja.Interfaces
 {
-    interface IBlankSpace
+    public interface IBlankSpace : IGameObject
     {
+        int GrowthTime { get; }
+
+        VegetableType VegetableHolder { get; }
+
+        void Grow();
     }
 }
