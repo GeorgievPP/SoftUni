@@ -77,5 +77,23 @@ CREATE TABLE Employees(
 		DepartmentId INT FOREIGN KEY REFERENCES Departments(Id) NOT NULL,
 		HireDate DATE NOT NULL,
 		Salary DECIMAL(7, 2) NOT NULL,
-		AddressId INT FOREIGN KEY REFERENCES Addresses(Id) NOT NULL
+		AddressId INT FOREIGN KEY REFERENCES Addresses(Id)
 )
+
+
+INSERT INTO Towns([Name])
+	VALUES
+			('Sofia'),
+			('Plovdiv'),
+			('Varna'),
+			('Burgas')
+
+INSERT INTO Departments([Name])
+	VALUES 
+			('Engineering'),
+			('Sales'),
+			('Marketing'),
+			('Software Development'),
+			('Quality Assurance')
+
+
