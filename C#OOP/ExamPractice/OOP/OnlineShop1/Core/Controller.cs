@@ -147,28 +147,30 @@ namespace OnlineShop.Core
 
         public string BuyBest(decimal budget)
         {
-            if (!this.computers.Any())
+          // if (!this.computers.Any())
+          // {
+          //     throw new ArgumentException($"Can't buy a computer with a budget of ${budget}."); // tyka
+          // }
+
+            if (!this.computers.Where(x => x.Price <= budget).Any())
             {
-                throw new ArgumentException($" Can't buy a computer with a budget of ${budget}."); // tyka
+                throw new ArgumentException($"Can't buy a computer with a budget of ${budget}."); // tyka
             }
 
-            var posta = this.computers.Where(x => x.Price <= budget).ToList();
-            if (!posta.Any())
-            {
-                throw new ArgumentException($" Can't buy a computer with a budget of ${budget}."); // tyka
-            }
-
+           // var posta = this.computers.Where(x => x.Price <= budget).ToList();
             double overall = 0.0;
 
-            foreach(var comp in posta)
+            foreach(var comp in this.computers.Where(x => x.Price <= budget))
             {
-                if(comp.OverallPerformance >= overall)
+                if(comp.OverallPerformance > overall)
                 {
                     overall = comp.OverallPerformance;
                 }
             }
 
-            var computer = this.computers.FirstOrDefault(x => x.OverallPerformance == overall);
+            var computer = this.computers.Where(x => x.Price <= budget)
+                .OrderByDescending(x => x.OverallPerformance)
+                .FirstOrDefault(x => x.OverallPerformance == overall);
 
             this.computers.Remove(computer);
 
@@ -208,11 +210,11 @@ namespace OnlineShop.Core
             }
 
             var component = this.components.FirstOrDefault(x => x.GetType().Name == componentType);
-            if(component == null)
-            {
-                return "Greshka";
-            }
-
+          //  if(component == null)
+          //  {
+          //      return "Greska";
+          //  }
+           
             computer.RemoveComponent(componentType);
             this.components.Remove(component);
 
@@ -228,15 +230,16 @@ namespace OnlineShop.Core
             }
 
             var peripheral = this.peripherals.FirstOrDefault(x => x.GetType().Name == peripheralType);
-            if (peripheral == null)
-            {
-                return "Greshka";
-            }
-
+          
             computer.RemovePeripheral(peripheralType);
             this.peripherals.Remove(peripheral);
 
             return $"Successfully removed {peripheralType} with id {peripheral.Id}.";
+        }
+
+        public void Close()
+        {
+            Environment.Exit(0);
         }
     }
 }
