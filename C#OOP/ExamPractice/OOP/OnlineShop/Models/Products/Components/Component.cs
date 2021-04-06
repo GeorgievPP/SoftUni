@@ -6,7 +6,7 @@ namespace OnlineShop.Models.Products.Components
 {
     public abstract class Component : Product, IComponent
     {
-        private int generation;
+        private int generation; //tyka
 
         protected Component(int id, string manufacturer, string model, decimal price, double overallPerformance, int generation) 
             : base(id, manufacturer, model, price, overallPerformance)

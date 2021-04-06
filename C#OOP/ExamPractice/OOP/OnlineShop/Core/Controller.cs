@@ -237,9 +237,9 @@ namespace OnlineShop.Core
             return $"Successfully removed {peripheralType} with id {peripheral.Id}.";
         }
 
-        public void Close()
-        {
-            Environment.Exit(0);
-        }
+     //  public void Close()
+     //  {
+     //      Environment.Exit(0);
+     //  }
     }
 }

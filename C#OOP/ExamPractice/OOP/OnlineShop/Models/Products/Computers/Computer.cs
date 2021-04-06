@@ -33,7 +33,7 @@ namespace OnlineShop.Models.Products.Computers
 
         public void AddComponent(IComponent component)
         {
-            if(this.components.FirstOrDefault(x => x.Id == component.Id) == component)
+            if (this.components.Any(x => x.GetType().Name == component.GetType().Name))
             {
                 throw new ArgumentException($"Component {component.GetType().Name} already exists in {this.GetType().Name} with Id {this.Id}.");
             }
@@ -43,7 +43,7 @@ namespace OnlineShop.Models.Products.Computers
 
         public void AddPeripheral(IPeripheral peripheral)
         {
-            if (this.peripherals.FirstOrDefault(x => x.Id == peripheral.Id) == peripheral)
+            if (this.peripherals.Any(x => x.GetType().Name == peripheral.GetType().Name))
             {
                 throw new ArgumentException($"Peripheral {peripheral.GetType().Name} already exists in {this.GetType().Name} with Id {this.Id}.");
             }
@@ -53,63 +53,49 @@ namespace OnlineShop.Models.Products.Computers
 
         public IComponent RemoveComponent(string componentType)
         {
-
-            if(!components.Any() || this.components.FirstOrDefault(x => x.GetType().Name == componentType) == null)
+            var component = this.components.FirstOrDefault(x => x.GetType().Name == componentType);
+            if(component == null)
             {
                 throw new ArgumentException($"Component {componentType} does not exist in {this.GetType().Name} with Id {this.Id}.");
             }
 
-            var component = this.components.FirstOrDefault(x => x.GetType().Name == componentType);
-
             this.components.Remove(component);
-
             return component;
         }
 
         public IPeripheral RemovePeripheral(string peripheralType)
         {
-            if (!peripherals.Any() || this.peripherals.FirstOrDefault(x => x.GetType().Name == peripheralType) == null)
+            var peripheral = this.peripherals.FirstOrDefault(x => x.GetType().Name == peripheralType);
+            if(peripheral == null)
             {
                 throw new ArgumentException($"Peripheral {peripheralType} does not exist in {this.GetType().Name} with Id {this.Id}.");
             }
 
-            var peripheral = this.peripherals.FirstOrDefault(x => x.GetType().Name == peripheralType);
-
             this.peripherals.Remove(peripheral);
-
             return peripheral;
         }
 
         public override string ToString()
         {
+            double peripheralsAverage = this.Peripherals.Count > 0 ? this.Peripherals.Average(x => x.OverallPerformance) : 0;
+
             StringBuilder sb = new StringBuilder();
 
-            sb.AppendLine($"Overall Performance: {this.OverallPerformance:f2}. Price: {this.Price:f2} - {this.GetType().Name}: {this.Manufacturer} {this.Model} (Id: {this.Id})");
+            //sb.AppendLine($"Overall Performance: {this.OverallPerformance:f2}. Price: {this.Price:f2} - {this.GetType().Name}: {this.Manufacturer} {this.Model} (Id: {this.Id})");
 
             sb.AppendLine($" Components ({this.components.Count}):");
-            if (this.components.Any())
+            foreach (var component in components)
             {
-                foreach(var component in components)
-                {
-                    sb.AppendLine($"  {component.ToString()}");
-                }
+                sb.AppendLine($"  {component}");
             }
 
-           
-            if (this.peripherals.Any())
+            sb.AppendLine($" Peripherals ({this.peripherals.Count}); Average Overall Performance ({this.peripherals.Average(x => x.OverallPerformance):f2}):");
+            foreach (var peri in peripherals)
             {
-                sb.AppendLine($" Peripherals ({this.peripherals.Count}); Average Overall Performance ({this.peripherals.Average(x => x.OverallPerformance):f2}):");
-                foreach ( var peri in peripherals)
-                {
-                    sb.AppendLine($"  {peri.ToString()}");
-                }
-            }
-            else
-            {
-                sb.AppendLine($" Peripherals ({this.peripherals.Count}); Average Overall Performance (0.00):");
+                sb.AppendLine($"  {peri}");
             }
 
-            return sb.ToString().TrimEnd();
+            return base.ToString() + $"\n{sb.ToString().TrimEnd()}";
         }
 
         private double Change(double basePerf)

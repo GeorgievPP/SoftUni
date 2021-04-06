@@ -10,7 +10,7 @@ namespace OnlineShop.Models.Products
         private string manufacturer;
         private string model;
         private decimal price;
-        private double ovverallPerformence;
+        private double overallPerformance;
 
         public Product(int id, string manufacturer, string model, decimal price, double overallPerformance)
         {
@@ -79,7 +79,7 @@ namespace OnlineShop.Models.Products
 
         public virtual double OverallPerformance
         {
-            get => this.ovverallPerformence;
+            get => this.overallPerformance;
             private set
             {
                 if (value <= 0)
@@ -87,7 +87,7 @@ namespace OnlineShop.Models.Products
                     throw new ArgumentException("Overall Performance can not be less or equal than 0.");
                 }
 
-                this.ovverallPerformence = value;
+                this.overallPerformance = value;
             }
         }
 
