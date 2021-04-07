@@ -89,7 +89,7 @@ namespace OnlineShop.Models.Products.Computers
                 sb.AppendLine($"  {component}");
             }
 
-            sb.AppendLine($" Peripherals ({this.peripherals.Count}); Average Overall Performance ({this.peripherals.Average(x => x.OverallPerformance):f2}):");
+            sb.AppendLine($" Peripherals ({this.peripherals.Count}); Average Overall Performance ({peripheralsAverage:f2}):");
             foreach (var peri in peripherals)
             {
                 sb.AppendLine($"  {peri}");
