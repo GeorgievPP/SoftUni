@@ -61,8 +61,7 @@ namespace OnlineShop.Core
                 throw new ArgumentException("Component type is invalid.");
             }
 
-            var component1 = this.components.FirstOrDefault(x => x.Id == component.Id);
-            if(component1 != null)
+            if(this.components.Any(x => x.Id == component.Id))
             {
                 throw new ArgumentException("Component with this id already exists.");
             }
@@ -92,7 +91,7 @@ namespace OnlineShop.Core
                 throw new ArgumentException("Computer type is invalid.");
             }
 
-            if(this.computers.Any() && this.computers.FirstOrDefault(x => x.Id == computer.Id) != null)
+            if(this.computers.Any(x => x.Id == computer.Id))
             {
                 throw new ArgumentException("Computer with this id already exists.");
             }
@@ -133,8 +132,7 @@ namespace OnlineShop.Core
                 throw new ArgumentException("Peripheral type is invalid.");
             }
 
-            var peripheral1 = this.peripherals.FirstOrDefault(x => x.Id == peripheral.Id);
-            if(peripheral1 != null)
+            if(this.peripherals.Any(x => x.Id == peripheral.Id))
             {
                 throw new ArgumentException("Peripheral with this id already exists.");
             }
