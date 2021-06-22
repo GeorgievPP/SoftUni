@@ -4,7 +4,7 @@ function solve() {
    const cart = [];
 
    document.querySelector('.shopping-cart').addEventListener('click', (ev) => {
-      if(ev.target.tagName == 'BUTTON' && ev.target.className == 'add-product') {
+      if(ev.target.tagName === 'BUTTON' && ev.target.className === 'add-product') {
          const product = ev.target.parentNode.parentNode;
          const title = product.querySelector('.product-title').textContent;
          const price = Number(product.querySelector('.product-line-price').textContent);
@@ -20,8 +20,11 @@ function solve() {
          acc.items.add(c.title);
          acc.total += c.price;
          return acc;
-      }, {items: new Set(), total: 0});
+      }, {items: [], total: 0});
 
-      output.value += `You bought ${[...result.items.entries()].join(', ')} for ${result.total.toFixed(2)}.`;
+      [...document.getElementsByTagName('button')].forEach((el) => 
+         el.setAttribute('disabled', ''));
+
+      output.value += `You bought ${Array.from(new Set(result.items)).join(', ')} for ${result.total.toFixed(2)}.`;
    });
-}
+}  // 25/100
