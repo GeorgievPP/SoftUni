@@ -82,7 +82,7 @@ function solve() {
         }
         return el;
     }
-};
+}
 
 
 
