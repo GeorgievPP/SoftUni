@@ -1,45 +1,25 @@
-function solve(arr) {
-    let obj = {};
-    arr.forEach(el => {
-        let [town, product, price] = el.split(' | ');
-        price = Number(price);
-
-        if (!obj.hasOwnProperty(product)) {
-            obj[product] = { price, town };
-        } else {
-            if (obj[product].price > price) {
-                obj[product] = { price, town };
+function solve(array) {
+    let products = new Map();
+    for (let sentance of array) {
+        let [town, product, price] = sentance.split(" | ");
+        if (!products.has(product)) {
+            products.set(product, new Map());
+        }
+        products.get(product).set(town, Number(price));
+    }
+    for (let [key, value] of products) {
+        let lowest = ([...value].reduce(function (a, b) {
+            if (a[1] < b[1]) {
+                return a;
+            } else if (a[1] > b[1]) {
+                return b;
             }
-        }
-    })
-
-    for (let el in obj) {
-        console.log(`${el} -> ${obj[el].price} (${obj[el].town})`)
+            return a;
+        }));
+        console.log(`${key} -> ${lowest[1]} (${lowest[0]})`);
     }
 }
-
-
-
-
-/*function solve(arr) {
-    let obj = {};
-    
-    for(const data of arr) {
-        let [town, product, stringPrice] = data.split(' | ');
-        let price =Number(stringPrice);
-
-        if(obj[product]) {
-            obj[product] = obj[product].price <= price ? obj[product] : { town, price: price };
-        } else {
-            obj[product] = { town, price: price };
-        }
-    };
-
-    for(const product in obj) {
-        console.log(`${product} -> ${obj[product].price} (${obj[product].town})`);
-    }
-}
-
+/*
 solve(['Sample Town | Sample Product | 1000',
     'Sample Town | Orange | 2',
     'Sample Town | Peach | 1',

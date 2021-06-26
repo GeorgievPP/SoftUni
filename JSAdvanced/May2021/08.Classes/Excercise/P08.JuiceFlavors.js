@@ -1,30 +1,34 @@
-function juiceStore(array) {
-    const bottles = new Map();
-
-    array.reduce((acc, value) => {
-        let [fruit, quantity] = value.split(' => ');
-        quantity = Number(quantity);
-
-        if(!acc.hasOwnProperty(fruit)) {
-            acc[fruit] = 0;
+function cappyJuice(input) {
+    let saveJuices = new Map;
+    let lessThan1000 = new Map;
+    let result = new Map;
+ 
+ 
+    for(let juice of input) {
+        let splitString = juice.split(/\s*[=>]\s*/g);
+        let juiceName = splitString[0];
+        let quantity = Number(splitString[2]);
+ 
+        if(saveJuices.has(juiceName)) {
+            let getValue = saveJuices.get(juiceName);
+            saveJuices.delete(juiceName);
+            saveJuices.set(juiceName, quantity + getValue);
+ 
         }
-        acc[fruit] += quantity;
-
-        if(acc[fruit] >= 1000) {
-            if(!bottles.has(fruit)) {
-                bottles.set(fruit, 0);
-            }
-
-            bottles.set(fruit, bottles.get(fruit) + parseInt(acc[fruit] / 1000));
-            acc[fruit] %= 1000;
+        else {
+            saveJuices.set(juiceName, quantity);
         }
-
-        return acc;
-    }, {});
-
-    for(const [fruit, quantity] of bottles) {
-        return `${fruit} => ${quantity}`;
+ 
     }
+ 
+    for(let [k, v] of saveJuices) {
+        let divideBottles = Math.floor(v / 1000);
+        if(divideBottles >= 1) {
+            console.log(`${k} => ${divideBottles}`);
+        }
+ 
+    }
+ 
 }
 
 
