@@ -1,8 +1,4 @@
-/*
 
-
-
-*/
 
 async function onSubmit(data) {
     const body = JSON.stringify({
@@ -21,7 +17,7 @@ async function onSubmit(data) {
         const data = await response.json();
         if (response.status == 200) {
             sessionStorage.setItem('authToken', data.accessToken);
-            window.location.pathname = 'index.html';
+            onSuccess();
         } else {
             throw new Error(data.message);
         }
@@ -32,10 +28,12 @@ async function onSubmit(data) {
 
 let main;
 let section;
+let onSuccess;
 
-export function setupLogin(mainTarget, sectionTarget) {
+export function setupLogin(mainTarget, sectionTarget, onSuccessTarget) {
     main = mainTarget;
     section = sectionTarget;
+    onSuccess = onSuccessTarget;
 
     const form = section.querySelector('form');
 
