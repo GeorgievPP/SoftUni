@@ -1,37 +1,31 @@
 function attachEvents() {
-    document.getElementById('submit').addEventListener('click', async () => {
-        const author = document.getElementById('author').value;
-        const content = document.getElementById('content').value;
-
-        await sendMessage({ author, content });
-
-        document.getElementById('author').value = '';
-        document.getElementById('content').value = '';
-
-        getMessages();
-    });
-
     document.getElementById('refresh').addEventListener('click', getMessages);
+    document.getElementById('submit').addEventListener('click', sendMessage);
 
-    getMessages();
 }
 
 attachEvents();
 
-async function getMessages(message) {
+async function getMessages() {
     const response = await fetch('http://localhost:3030/jsonstore/messenger');
     const data = await response.json();
 
-    const message = Object.values(data).map(v => `${v.author}: ${v.content}`).join('\n');
-    document.getElementById('messages').value = message;
+    const messages = Object.values(data).map(v => `${v.author}: ${v.content}`).join('\n');
+    document.getElementById('messages').value = messages;
 }
 
-async function sendMessage(message) {
-    const response = await fetch('http://localhost:3030/jsonstore/messanger', {
+async function sendMessage() {
+    const author = document.getElementById('author').value;
+    const content = document.getElementById('content').value;
+
+    await fetch('http://localhost:3030/jsonstore/messenger', {
         method: 'post',
-        headers: { 'Content-Type' : 'application/json' },
-        body: JSON.stringify(message)
+        headers: { 'Content-Type': 'applications/json' },
+        body: JSON.stringify({ author, content })
     });
 
-    const data = await response.json();
+    document.getElementById('author').value = '';
+    document.getElementById('content').value = '';
+
+    getMessages();
 }
