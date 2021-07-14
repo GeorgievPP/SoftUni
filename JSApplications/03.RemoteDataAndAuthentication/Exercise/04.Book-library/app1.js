@@ -11,7 +11,7 @@ async function request(url, options) {
 
 //function to load all books from server and display them
 async function getAllBooks() {
-    const books = await response('http://localohost:3030/jsonstore/collections/books');
+    const books = await request('http://localohost:3030/jsonstore/collections/books');
 
     const rows = Object.entries(books).map(createRow).join('');
     document.querySelector('tbody').innerHTML = rows;
@@ -83,9 +83,9 @@ function start() {
     //event listener on the load button
     document.getElementById('loadBooks').addEventListener('click', getAllBooks);
     //event listener on the create button
-    document.getElementById('createForm').addEventListener('submit', createBook);
+   // document.getElementById('createForm').addEventListener('submit', createBook);
 
-    document.getElementById('editForm').addEventListener('submit', updateBook);
+  //  document.getElementById('editForm').addEventListener('submit', updateBook);
 
     //event listener on the delete and edit buttons
     document.querySelector('table').addEventListener('click', handleTableClick);

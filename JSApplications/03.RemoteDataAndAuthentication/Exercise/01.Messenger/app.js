@@ -17,6 +17,11 @@ async function getMessages() {
 async function sendMessage() {
     const author = document.getElementById('author').value;
     const content = document.getElementById('content').value;
+/*
+    if (author == '' || content == '') {
+        return alert('All fields are required!');
+    }
+    */
 
     await fetch('http://localhost:3030/jsonstore/messenger', {
         method: 'post',
