@@ -42,6 +42,13 @@ yearSelect.addEventListener('click', (event) => {
 
 document.body.addEventListener('click', (event) => {
     if (event.target.tagName == 'CAPTION') {
+        const sectionId = event.target.parentNode.parentNode.id;
+        if (sectionId.includes('year-')) {
+            displaySection(yearSelect);
+        } else if (sectionId.includes('month-')) {
+            const yearId = `year-${sectionId.split('-')[1]}`;
+            displaySection(years[yearId]);
+        }
 
     } else if(event.target.tagName =='TD' || event.target.tagName == 'DIV') {
         const monthName = event.target.textContent.trim();
