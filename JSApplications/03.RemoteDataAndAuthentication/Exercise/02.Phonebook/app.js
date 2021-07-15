@@ -19,13 +19,16 @@ async function loadPost() {
 
 async function deletePost(event) {
     const id = event.target.parentNode.id;
+    const confirmed = confirm('Are you sure you want tot delete this contact?');
+    if(confirmed) {
+        
+        const response = await fetch(`http://localhost:3030/jsonstore/phonebook/` + id, {
+            method:'delete',
+            headers:{'Content-Type': 'applications/json' },
+        });
 
-    const response = await fetch(`http://localhost:3030/jsonstore/phonebook/` + id, {
-        method:'delete',
-        headers:{'Content-Type': 'applications/json' },
-    });
-
-    event.target.parentNode.remove();
+        event.target.parentNode.remove();
+    }
 }
 
 async function createContact() {
@@ -42,6 +45,8 @@ async function createContact() {
         return alert('Empty input field/s !');
     }
 
+    document.getElementById('person').value = '';
+    document.getElementById('phone').value = '';
     loadPost();
 }
 
