@@ -1,5 +1,6 @@
 import { e } from './dom.js';
 import { showHome } from './home.js';
+import {showEdit} from './edit.js';
 
 async function getLikesByMovieById(id) {
     const response = await fetch(`http://localhost:3030/data/likes?where=movieId%3D%22${id}%22&distinct=_ownerId&count`);
@@ -53,7 +54,7 @@ function createMovieCard(movie, likes, ownLike) {
     if (userId != null) {
         if (userId == movie._ownerId) {
             controls.appendChild(e('a', { className: 'btn btn-danger', href: '#', onclick: (e) => onDelete(e, movie._id) }, 'Delete'));
-            controls.appendChild(e('a', { className: 'btn btn-warning', href: '#' }, 'Edit'));
+            controls.appendChild(e('a', { className: 'btn btn-warning', href: '#',  onclick: () => showEdit(movie._id) }, 'Edit'));
         } else if (ownLike.length == 0){
             controls.appendChild(e('a', { className: 'btn btn-primary', href: '#', onclick: likeMovie }, 'Like'));
         }
