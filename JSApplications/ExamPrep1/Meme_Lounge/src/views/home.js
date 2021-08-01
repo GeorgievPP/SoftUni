@@ -15,5 +15,10 @@ const homeTemplate = () => html`
 </section>`;
 
 export async function homePage(ctx) {
+    const token = sessionStorage.getItem('authToken');
+    if (token != null) {
+        return ctx.page.redirect('/catalog');
+    }
+
     ctx.render(homeTemplate());
 }
