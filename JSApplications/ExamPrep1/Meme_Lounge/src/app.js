@@ -21,8 +21,8 @@ page('/', decorateContext, guestUsersOnly, homePage);
 page('/login', decorateContext, loginPage);
 page('/register', decorateContext, registerPage);
 page('/catalog', decorateContext, catalogPage);
-page('/create', decorateContext, createPage);
 page('/details/:id', decorateContext, detailsPage);
+page('/create', decorateContext, createPage);
 page('/edit/:id', decorateContext, editPage);
 page('/profile', decorateContext, profilePage);
 

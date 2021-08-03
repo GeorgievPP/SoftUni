@@ -1,6 +1,8 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
 
 import { getMemeById, updateMeme } from '../api/data.js';
+import { notify } from '../notification.js';
+
 
 const editTemplate = (meme, onSubmit) => html`
 <section id="edit-meme">
@@ -10,7 +12,8 @@ const editTemplate = (meme, onSubmit) => html`
             <label for="title">Title</label>
             <input id="title" type="text" placeholder="Enter Title" name="title" .value=${meme.title}>
             <label for="description">Description</label>
-            <textarea id="description" placeholder="Enter Description" name="description" .value=${meme.description}></textarea>
+            <textarea id="description" placeholder="Enter Description" name="description"
+                .value=${meme.description}></textarea>
             <label for="imageUrl">Image Url</label>
             <input id="imageUrl" type="text" placeholder="Enter Meme ImageUrl" name="imageUrl" .value=${meme.imageUrl}>
             <input type="submit" class="registerbtn button" value="Edit Meme">
@@ -30,17 +33,22 @@ export async function editPage(ctx) {
         const description = formData.get('description');
         const imageUrl = formData.get('imageUrl');
 
-        if (!title || !description || !imageUrl) {
-            return('All field are required!');
+        try {
+            if (!title || !description || !imageUrl) {
+                throw new Error('All field are required!');
+            }
+
+            await updateMeme(memeId, {
+                title,
+                description,
+                imageUrl
+            });
+
+            ctx.page.redirect('/details/' + memeId);
+
+        } catch (err) {
+            notify(err.message);
         }
-
-        await updateMeme(memeId, {
-            title,
-            description,
-            imageUrl
-        });
-
-        ctx.page.redirect('/details/' + memeId);
 
     }
 }
