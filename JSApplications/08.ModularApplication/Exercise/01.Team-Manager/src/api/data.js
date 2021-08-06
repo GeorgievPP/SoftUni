@@ -15,7 +15,7 @@ export async function getTeams() {
 } 
 
 export async function getTeamById(id) {
-    return await api.get(host + 'data/teams/' + id);
+    return await api.get(host + '/data/teams/' + id);
 }
 
 export async function createTeam(team) {
