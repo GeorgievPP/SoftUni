@@ -1,0 +1,11 @@
+------WebKitFormBoundaryp9RkFp9aCThGst1w
+Content-Disposition: form-data; name="category"
+
+cats
+------WebKitFormBoundaryp9RkFp9aCThGst1w
+Content-Disposition: form-data; name="uploaded-file"; filename="demo.txt"
+Content-Type: text/plain
+
+this is demo
+second line of text
+------WebKitFormBoundaryp9RkFp9aCThGst1w--
