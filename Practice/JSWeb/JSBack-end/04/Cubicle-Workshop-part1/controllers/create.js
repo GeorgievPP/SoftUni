@@ -7,8 +7,8 @@ module.exports = {
             name: req.body.name,
             description: req.body.description,
             imageUrl: req.body.imageUrl,
-            difficulty: req.body.difficulty
-        }
+            difficulty: Number(req.body.difficulty)
+        };
 
         await req.storage.create(cube);
 
