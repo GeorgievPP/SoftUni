@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Cat = require('./models/Cat');
+const Comment = require('./models/Comment');
 const Person = require('./models/Person');
+const Post = require('./models/Post');
 
 start();
 
@@ -12,36 +14,13 @@ async function start() {
         useUnifiedTopology: true
     });
     
-   // console.log('Database connected');
+    console.log('Database connected');
 
-
-    try {
-        const someCat = new Cat({
-            name: 'Fluffy',
-            color: 'Green'
-        });
-        await someCat.save();
-    } catch(err) {
-        console.log('Caught the error');
-        console.error('>>>', err.message);
-    }
-
-
-    const person = new Person({
-        age: -5
+    const post = await Post.findOne({}).populate('author').populate({
+        path: 'comments',
+        populate: 'author'
     });
 
-    try {
-        await person.save();
-    } catch(err) {
-        console.log('Caught the error');
-        console.error('>>>', err.message);
-    }
-/*
-    const people = await Person.find({});
-    people.forEach(p => p.sayHi());
-    people.map(p => p.fullName).forEach(n => console.log(n));
-*/
-
-
+    console.log(post);
+    
 }
