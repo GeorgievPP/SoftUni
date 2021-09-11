@@ -12,24 +12,44 @@ async function getAll(query) {
         options.name = { $regex: query.search, $options: 'i' };
         console.log('tyka y')
     }
-    
+
     if (query.from) {
         options.difficulty = { $gte: Number(query.from) };
     }
-    
+
     if (query.to) {
         options.difficulty = options.difficulty || {};
         options.difficulty.$lte = Number(query.to);
-    } 
-    
+    }
+
     const cubes = Cube.find(options).lean();
     return cubes;
 }
 
 async function getById(id) {
-    const cube = await Cube.findById(id).populate('comments').populate('accessories').lean();
+    const cube = await Cube
+        .findById(id)
+        .populate({
+            path: 'comments',
+            populate: { path: 'author' }
+        })
+        .populate('accessories')
+        .populate('author')
+        .lean();
+
     if (cube) {
-        return cube;
+        const viewModel = {
+            _id: cube._id,
+            name: cube.name,
+            description: cube.description,
+            imageUrl: cube.imageUrl,
+            difficulty: cube.difficulty,
+            comments: cube.comments.map(c => ({ content: c.content, author: c.author.username })),
+            accessories: cube.accessories,
+            author: cube.author && cube.author.username,
+            authorId: cube.author && cube.author._id
+        };
+        return viewModel;
     } else {
         return undefined;
     }
@@ -46,7 +66,7 @@ async function edit(id, cube) {
     if (!existing) {
         throw new ReferenceError('No such ID in database');
     }
-    
+
     Object.assign(existing, cube);
 
     return existing.save();

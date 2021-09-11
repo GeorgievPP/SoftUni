@@ -1,4 +1,6 @@
 const { Router } = require('express');
+const { isAuth, isOwner } = require('../middleware/guards');
+const { preloadCube } = require('../middleware/preload');
 
 const router = Router();
 
@@ -16,15 +18,16 @@ router.get('/', async (req, res) => {
     res.render('index', ctx);
 });
 
-router.get('/create', (req, res) => {
+router.get('/create', isAuth(), (req, res) => {
     res.render('create', { title: 'Create Cube' });
 });
-router.post('/create', async (req, res) => {
+router.post('/create', isAuth(), async (req, res) => {
     const cube = {
         name: req.body.name,
         description: req.body.description,
         imageUrl: req.body.imageUrl,
-        difficulty: Number(req.body.difficulty)
+        difficulty: Number(req.body.difficulty),
+        author: req.user._id
     };
 
     try {
@@ -38,40 +41,44 @@ router.post('/create', async (req, res) => {
     res.redirect('/');
 });
 
-router.get('/details/:id',  async (req, res) => {
+router.get('/details/:id', preloadCube(), async (req, res) => {
     console.log(req.params.id)
-    const cube = await req.storage.getById(req.params.id);
+    const cube = req.data.cube;
+
     if (cube == undefined) {
         res.redirect('/404');
     } else {
+        cube.isOwner = req.user && (cube.authorId == req.user._id);
+        
         console.log(cube);
         const ctx = {
             title: 'Cubicle',
             cube
         };
-        res.render('details', ctx);    
+        res.render('details', ctx);
     }
 });
 
-router.get('/edit/:id', async (req, res) => {
+router.get('/edit/:id', preloadCube(), isOwner(), async (req, res) => {
     console.log(req.params.id);
 
-    const cube = await req.storage.getById(req.params.id);
-    cube[`select${cube.difficulty}`] = true;
+    const cube = req.data.cube;
     console.log(cube);
 
     if (!cube) {
         res.redirect('/404');
     } else {
-        const ctx =  {
+        cube[`select${cube.difficulty}`] = true;
+
+        const ctx = {
             title: 'Edit Cube',
-            cube 
+            cube
         };
         res.render('edit', ctx);
     }
 });
 
-router.post('/edit/:id', async (req, res) => {
+router.post('/edit/:id', preloadCube(), isOwner(), async (req, res) => {
     const cube = {
         name: req.body.name,
         description: req.body.description,
@@ -82,12 +89,12 @@ router.post('/edit/:id', async (req, res) => {
     try {
         await req.storage.edit(req.params.id, cube);
         res.redirect('/');
-    } catch(err) {
+    } catch (err) {
         res.redirect('/404');
     }
 });
 
-router.get('/attach/:cubeId',  async (req, res) => {
+router.get('/attach/:cubeId', async (req, res) => {
     const cube = await req.storage.getById(req.params.cubeId);
     const accessories = await req.storage.getAllAccessories((cube.accessories || []).map(a => a._id));
 
