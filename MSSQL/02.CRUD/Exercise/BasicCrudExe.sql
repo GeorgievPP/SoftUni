@@ -1,9 +1,21 @@
 
 USE [SoftUni]		
 
+-- Problem02
+
+SELECT * FROM [Departments]
+
+-- Problem03
+
+SELECT [Name] FROM [Departments]
+
 -- Problem04
 
 SELECT FirstName, LastName, Salary FROM Employees
+
+-- Problem05
+
+SELECT FirstName, MiddleName, LastName FROM Employees
 
 -- Problem06
 
@@ -13,7 +25,7 @@ SELECT (FirstName + '.' + LastName + '@softuni.bg') AS [Full Email Address]
 SELECT CONCAT(FirstName, '.', LastName, '@', 'softuni.bg') AS [Full Email Address]
 FROM Employees
 
--- Problem07
+	-- Problem07
 
 SELECT DISTINCT Salary FROM Employees
 
@@ -52,6 +64,11 @@ ORDER BY Salary DESC
 SELECT TOP(5) FirstName, LastName FROM Employees
 ORDER BY Salary DESC
 
+--Problem14
+
+SELECT FirstName, LastName FROM Employees
+WHERE DepartmentID != 4
+
 		--OFFSET, FETCH NEXT
 
 SELECT FirstName, LastName FROM Employees
@@ -68,7 +85,24 @@ ORDER BY Salary DESC,
 		 LastName DESC, 
 		 MiddleName ASC
 
--- Problem12
+
+-- Problem16
+
+GO
+
+CREATE VIEW V_EmployeesSalaries
+AS 
+(SELECT 
+	FirstName, 
+	LastName, 
+	Salary
+FROM Employees)
+
+GO
+
+
+
+-- Problem17
 
 GO
 
@@ -91,10 +125,20 @@ SELECT SUM(Salary) AS [SalarySum] FROM (
 ) AS [TopFiveSalaries]
 
 
+-- Problem18
+
+SELECT DISTINCT JobTitle FROM Employees
+
+
 -- Problem19
 
 SELECT TOP (10) * FROM Projects
 ORDER BY StartDate ASC, [Name] ASC
+
+-- Problem20
+
+SELECT TOP (7) FirstName, LastName, HireDate FROM Employees
+ORDER BY HireDate DESC
 
 
 -- Problem21
@@ -105,9 +149,23 @@ WHERE DepartmentID IN (1, 2, 4, 11)
 
 SELECT Salary FROM Employees
 
--- Problem24 
+---
 
 USE [Geography]
+-- Problem22
+
+SELECT PeakName FROM Peaks
+ORDER BY PeakName ASC
+
+-- Problem23
+
+SELECT TOP(30) [CountryName], [Population] FROM Countries
+WHERE ContinentCode = 'EU'
+ORDER BY [Population] DESC,
+		 CountryName ASC
+
+
+-- Problem24 
 
 SELECT CountryName, CountryCode,
 	CASE
@@ -117,3 +175,10 @@ SELECT CountryName, CountryCode,
 FROM Countries
 ORDER BY CountryName ASC
 
+----
+
+USE Diablo
+-- Problem25
+
+SELECT [Name] FROM Characters
+ORDER BY [Name] ASC
