@@ -118,3 +118,41 @@ SELECT ContinentCode, CurrencyCode, COUNT(CurrencyCode) AS Total,
  GROUP BY ContinentCode, CurrencyCode) AS k
 	WHERE Ranked = 1 AND Total > 1
 ORDER BY ContinentCode
+
+--Problem16
+
+SELECT COUNT(*)
+FROM Countries AS c
+LEFT JOIN MountainsCountries AS mc ON mc.CountryCode = C.CountryCode
+WHERE mc.MountainId IS NULL
+
+
+--Problem17
+
+SELECT TOP(5) CountryName, MAX(p.Elevation) AS HighestPeak, MAX(r.Length) AS LongestRiver
+ FROM Countries AS c
+ LEFT JOIN MountainsCountries AS mc ON mc.CountryCode = c.CountryCode
+ LEFT JOIN Mountains AS m ON m.Id = mc.MountainId
+ LEFT JOIN Peaks AS p ON p.MountainId = m.Id
+ LEFT JOIN CountriesRivers AS cr ON cr.CountryCode = c.CountryCode
+ LEFT JOIN Rivers AS r ON r.Id = cr.RiverId
+ GROUP BY CountryName
+ ORDER BY HighestPeak DESC, LongestRiver DESC, CountryName
+
+--Problem18
+
+SELECT TOP(5) k.CountryName, k.PeakName, k.HighestPeak, k.MountainRange
+FROM (SELECT CountryName,
+	ISNULL(p.PeakName, '(no highest peak)') AS PeakName,
+	ISNULL(m.MountainRange, '(no mountain)') AS MountainRange,
+	ISNULL(MAX(p.Elevation), 0) AS HighestPeak,
+	DENSE_RANK() OVER (PARTITION BY CountryName ORDER BY MAX(p.Elevation) DESC) AS Ranked
+	FROM Countries AS c
+	 LEFT JOIN MountainsCountries AS mc ON mc.CountryCode = c.CountryCode
+	 LEFT JOIN Mountains AS m ON m.Id = mc.MountainId
+	 LEFT JOIN Peaks AS p ON p.MountainId = m.Id
+	LEFT JOIN CountriesRivers AS cr ON cr.CountryCode = c.CountryCode
+	LEFT JOIN Rivers AS r ON r.Id = cr.RiverId
+GROUP BY CountryName, p.PeakName, m.MountainRange) AS k
+WHERE Ranked = 1
+ORDER BY CountryName, PeakName
