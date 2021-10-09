@@ -135,3 +135,40 @@ ORDER BY
 	r.OpenDate ASC,
 	s.Label ASC, 
 	u.Username ASC
+
+-- joudje11
+
+CREATE FUNCTION udf_hoursToComplete
+	(@StartDate DATETIME, @EndDate DATETIME)
+RETURNS AS 
+BEGIN
+	IF (@StartDate IS NULL)
+		RETURN 0;
+	IF (@EndDate IS NULL)
+		RETURN 0;
+	RETURN DATEDIFF(HOUR, @StartDate, @EndDate)
+END
+
+-- joudje12
+
+CREATE PROCEDURE usp_AssignEmployeeToReport
+	(@EmployeeId INT, @ReportId INT)
+AS
+BEGIN
+	DECLARE @EmployeeDepartmentId INT = 
+			(SELECT DepartmentId FROM Employees WHERE Id = @EmployeeId);
+
+	DECLARE @ReportDepartmentId INT= 
+			(SELECT c.DepartmentId
+			FROM Reports AS r
+			JOIN Categories AS c ON c.Id = r.CategoryId
+			WHERE r.Id = @ReportId)
+
+	IF (@EmployeeDepartmentId != @ReportDepartmentId)
+		THROW 50000, 'Employee doesn''t belong to the appropriate department!', 1
+
+	UPDATE Reports
+		SET EmployeeId = @EmployeeId
+		WHERE Id = @ReportId
+
+END
