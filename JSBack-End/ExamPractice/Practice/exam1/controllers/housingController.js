@@ -4,6 +4,11 @@ const { isUser } = require('../middlewares/guards');
 
 
 router.get('/create', isUser(), async (req, res) => {
+    res.render('housing/create');
+});
+
+
+router.post('/create', isUser(), async (req, res) => {
     const housingData = {
         name: req.body.name,
         type: req.body.type,
@@ -51,7 +56,7 @@ router.get('/details/:id', async (req, res) => {
     try {
         const housing = await req.storage.getHousingById(req.params.id);
         housing.hasUser = Boolean(req.user);
-        housing.isAuthor = req.user && req.user._id == play.author;
+        //housing.isAuthor = req.user && req.user._id == play.author;
         //play.liked = req.user && play.userLiked.find(u => u._id == req.user._id);
 
         res.render('housing/details', { housing });

@@ -15,6 +15,7 @@ module.exports = (app) => {
     app.use(express.urlencoded({ extended: true }));
     app.use(cookieParser());
     app.use(authMiddleware());
+    app.use(storageMiddleware());
 
     app.use((req, res, next) => {
         if (!req.url.includes('favicon')) {
@@ -29,5 +30,4 @@ module.exports = (app) => {
     });
 
     // TODO: ADD STORAGE MIDDLEWARE
-    app.use(storageMiddleware());
 };

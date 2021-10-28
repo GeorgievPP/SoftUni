@@ -12,7 +12,7 @@ async function getAllHousings() {
 }
 
 
-async function getAllHousingsById(id) {
+async function getHousingById(id) {
     const housing = await Housing.findById(id).lean();
     return housing;
 }
@@ -34,7 +34,7 @@ async function editHousing(id, housingData) {
 module.exports = {
     createHousing,
     getAllHousings,
-    getAllHousingsById,
+    getHousingById,
     editHousing,
 
 };

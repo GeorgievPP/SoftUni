@@ -7,7 +7,7 @@ const userServices = require('../services/user');
 module.exports = () => (req, res, next) => {
     if (parseToken(req, res)) {
         req.auth = {
-            async register(username, password) {
+            async register(fullName, username, password) {
                 const token = await register(fullName, username, password);
                 res.cookie(COOKIE_NAME, token);
             },
@@ -40,6 +40,10 @@ async function register(fullName, username, password) {
 }
 
 async function login(username, password) {
+    if (!username || !password) {
+        throw new Error('All fields are required');
+    }
+    
     const user = await userServices.getUserByUsername(username);
 
     if (!user) {
@@ -70,6 +74,7 @@ function parseToken(req, res) {
         try {
             const userData = jwt.verify(token, TOKEN_SECRET);
             req.user = userData;
+            res.locals.user = userData;
         } catch (err) {
             res.clearCookie(COOKIE_NAME);
             res.redirect('/auth/login');
