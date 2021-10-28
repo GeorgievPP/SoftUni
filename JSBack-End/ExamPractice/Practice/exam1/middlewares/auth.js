@@ -8,7 +8,7 @@ module.exports = () => (req, res, next) => {
     if (parseToken(req, res)) {
         req.auth = {
             async register(username, password) {
-                const token = await register(username, password);
+                const token = await register(fullName, username, password);
                 res.cookie(COOKIE_NAME, token);
             },
             async login(username, password) {
@@ -24,7 +24,7 @@ module.exports = () => (req, res, next) => {
     }
 };
 
-async function register(username, password) {
+async function register(fullName, username, password) {
     // TODO adapt parameters to project requirements
     // TODO extra validations
     const existing = await userServices.getUserByUsername(username);
@@ -34,7 +34,7 @@ async function register(username, password) {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await userServices.createUser(username, hashedPassword);
+    const user = await userServices.createUser(fullName, username, hashedPassword);
 
     return generateToken(user);
 }
@@ -58,6 +58,7 @@ async function login(username, password) {
 function generateToken(userData) {
     return jwt.sign({
         _id: userData._id,
+        fullName: userData.fullName,
         username: userData.username
     }, TOKEN_SECRET);
 }

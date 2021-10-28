@@ -4,6 +4,7 @@ async function createUser(username, hashedPassword) {
     // TODO adapt properties to project requirements
 
     const user = new User({
+        fullName,
         username,
         hashedPassword
     });

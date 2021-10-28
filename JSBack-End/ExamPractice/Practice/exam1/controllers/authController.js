@@ -24,7 +24,7 @@ router.post(
                 throw new Error('Validation error');
             }
 
-            await req.auth.register(req.body.username, req.body.password);
+            await req.auth.register(req.body.fullName, req.body.username, req.body.password);
 
             res.redirect('/');  // TODO change redirect location
         } catch (err) {
@@ -32,6 +32,7 @@ router.post(
             const ctx = {
                 errors,
                 userData: {
+                    fullName: req.body.fullName,
                     username: req.body.username
                 }
             };
