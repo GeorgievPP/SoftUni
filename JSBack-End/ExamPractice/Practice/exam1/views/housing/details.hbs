@@ -2,19 +2,19 @@
     <section id="deatils-page">
         <div class="wrapper">
             <div class="product-img">
-                <img src="./static/images/apartments.jpg">
+                <img src="{{housing.homeImage}}">
             </div>
             <div class="product-info">
                 <div class="product-text">
                     <div class="product-text">
-                        <h1>Name: Sunhouse C21</h1>
-                        <h2>Type: Apartment</h2>
-                        <h4>Year: 2021</h4>
-                        <h4>City: Sofia</h4>
-                        <p>Description: Spacious dining room, remodel kitchen and wonderful deeded walk-out deck.</p>
+                        <h1>Name: {{housing.name}}</h1>
+                        <h2>Type: {{housing.type}}</h2>
+                        <h4>Year: {{housing.year}}</h4>
+                        <h4>City: {{housing.city}}</h4>
+                        <p>Description: {{housing.description}}</p>
 
                         <!-- if there are already tenants of the housing, separate their names with a comma and a space ", "  -->
-                        <p>People rented this housing: Alex Petkov, Ivan Dobrev</p>
+                        <p>People rented this housing: </p>
 
                         <!-- If not display: -->
                         <p>People rented this housing: There are no tenants yet.</p>

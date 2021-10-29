@@ -2,7 +2,7 @@ const { Schema,model  } = require('mongoose');
 
 const schema = new Schema({
     name: { type: String, require: [true, 'Name should be at least 6 characters'], minlength: 6 },
-    type: { type: String, require: true}, // must validate 
+    type: { type: String, enum: ['Apartament', 'Villa', 'House'], require: true}, // must validate ... done
     year: { type: Number, require: [true, 'Year should be between 1850 and 2021'], min: 1850, max: 2021 },
     city: { type: String, require: [true, 'City name should be at least 4 characters long'], minlength: 4 },
     homeImage: { type: String, require: true, match: [/^https?/, 'Image must be a valid URL'] },

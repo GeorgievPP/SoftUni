@@ -56,8 +56,8 @@ router.get('/details/:id', async (req, res) => {
     try {
         const housing = await req.storage.getHousingById(req.params.id);
         housing.hasUser = Boolean(req.user);
-        //housing.isAuthor = req.user && req.user._id == play.author;
-        //play.liked = req.user && play.userLiked.find(u => u._id == req.user._id);
+        housing.isAuthor = req.user && req.user._id == housing.owner;
+        housing.rentedHome = housing.rentedHome.find(u => u._id == req.user._id);
 
         res.render('housing/details', { housing });
     } catch (err) {
