@@ -11,6 +11,12 @@ async function getAllHousings() {
     return housings;
 }
 
+async function getTopHousings() {
+    let sort = {cratedAt: -1};
+    const housings = await Housing.find({}).sort(sort).lean();
+    return housings;
+}
+
 
 async function getHousingById(id) {
     const housing = await Housing.findById(id).lean();
@@ -31,10 +37,30 @@ async function editHousing(id, housingData) {
     return housing.save();
 }
 
+async function bookHousing(housingId, userId) {
+    const housing = await Housing.findById(housingId);
+    const user = await User.findById(userId);
+
+    if (user._id == housing.owner) {
+        throw new Error('Cannot book you own hotel!');
+    }
+
+    if (housing.availablePieces == 0) {
+        throw new Error('No available pieces');
+    }
+    //user.bookedHotels.push(housing);
+    housing.availablePieces -= 1;
+    housing.rentedHome.push(user);
+
+    return Promise.all([user.save(), housing.save()]);
+}
+
 module.exports = {
     createHousing,
     getAllHousings,
+    getTopHousings,
     getHousingById,
     editHousing,
+    bookHousing
 
 };

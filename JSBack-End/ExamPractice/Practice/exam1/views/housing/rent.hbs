@@ -1,0 +1,16 @@
+<main>
+
+    <section id="all-listings">
+        <h1>Apartments for recents</h1>
+        <!-- If there are offers for housing in the database display each of them -->
+
+        <div class="houses">
+            {{#each housings}}
+            {{> housing}}
+            {{else}}
+            <p class="no-data">There are no housing offers found...</p>
+            {{/each}}
+        </div>
+ 
+    </section>
+</main>
