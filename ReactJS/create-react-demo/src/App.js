@@ -2,6 +2,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Lorem from './components/Lorem';
 import Clock from './components/Clock';
+import Counters from './components/Counters';
 
 
 import './App.css';
@@ -16,10 +17,9 @@ function App() {
 
 
             <main>
-                <Clock />
-                <Welcome name="Sara" />
-                <Lorem />
                 <Clock2 />
+                <Counters />
+
                 <Lorem />
             </main>
 
