@@ -3,7 +3,7 @@ import React, { Component } from "react";
 
 class Counter extends Component {
     state = {
-        value: this.props.value,
+        value: this.props.counter.value,
         tags: []
         //imageUrl: 'https://picsum.photos/200'
     };
@@ -27,7 +27,7 @@ class Counter extends Component {
     }
 
     handleIncrement = product => {
-        console.log(product);
+       // console.log(product);
         this.setState({ value: this.state.value + 1 })
     };
 
@@ -38,10 +38,11 @@ class Counter extends Component {
         return (
             <div>
                 {this.props.children}
-                <h4>Second Counter #{this.props.id}</h4>
+                <h4>Second Counter #{this.props.counter.id}</h4>
 
                 <span style={this.styles}>{this.formatCount()}</span>
                 <button onClick={ () => this.handleIncrement({ id: 1 }) }>Increment</button>
+                <button onClick={ () =>  this.props.onDelete(this.props.counter.id) }>Delete</button>
                 <span style={{ fontSize: 30 }}>{this.formatCount()}</span>
                 <div>
                     { this.state.tags.length === 0 && "Please create a new tag" }
