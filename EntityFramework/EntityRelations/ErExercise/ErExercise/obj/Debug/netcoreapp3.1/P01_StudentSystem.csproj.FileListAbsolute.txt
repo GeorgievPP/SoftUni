@@ -44,3 +44,4 @@ C:\Users\calev\Documents\GitHub\SoftUni\EntityFramework\EntityRelations\ErExerci
 C:\Users\calev\Documents\GitHub\SoftUni\EntityFramework\EntityRelations\ErExercise\ErExercise\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\calev\Documents\GitHub\SoftUni\EntityFramework\EntityRelations\ErExercise\ErExercise\obj\Debug\netcoreapp3.1\P01_StudentSystem.csproj.AssemblyReference.cache
 C:\Users\calev\Documents\GitHub\SoftUni\EntityFramework\EntityRelations\ErExercise\ErExercise\obj\Debug\netcoreapp3.1\P01_StudentSystem.csproj.CopyComplete
+C:\Users\calev\Documents\GitHub\SoftUni\EntityFramework\EntityRelations\ErExercise\ErExercise\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
