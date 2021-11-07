@@ -18,8 +18,15 @@ namespace P03_FootballBetting.Data.Models
         public int SecondaryKitColorId { get; set; }
         public Color SecondaryKitColor { get; set; }
 
-        public string TownId{ get; set; }
+        public int TownId{ get; set; }
         public Town Town { get; set; }
+
+        // collecton players
+
+        public ICollection<Player> Players{ get; set; }
+
+        public ICollection<Game> HomeGames { get; set; }
+        public ICollection<Game> AwayGames { get; set; }
 
     }
 }

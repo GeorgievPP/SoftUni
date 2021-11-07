@@ -44,3 +44,4 @@ C:\Users\calev\Documents\GitHub\SoftUni\EntityFramework\EntityRelations\ErExerci
 C:\Users\calev\Documents\GitHub\SoftUni\EntityFramework\EntityRelations\ErExercise\P03_FootballBetting\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\calev\Documents\GitHub\SoftUni\EntityFramework\EntityRelations\ErExercise\P03_FootballBetting\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\calev\Documents\GitHub\SoftUni\EntityFramework\EntityRelations\ErExercise\P03_FootballBetting\obj\Debug\netcoreapp3.1\P03_FootballBetting.csproj.CopyComplete
+C:\Users\calev\Documents\GitHub\SoftUni\EntityFramework\EntityRelations\ErExercise\P03_FootballBetting\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
