@@ -1,0 +1,13 @@
+C:\Users\calev\Documents\GitHub\SoftUni\EntityFramework\05.JSONProcessing\ProductShop\bin\Debug\netcoreapp2.1\ProductShop.deps.json
+C:\Users\calev\Documents\GitHub\SoftUni\EntityFramework\05.JSONProcessing\ProductShop\bin\Debug\netcoreapp2.1\ProductShop.runtimeconfig.json
+C:\Users\calev\Documents\GitHub\SoftUni\EntityFramework\05.JSONProcessing\ProductShop\bin\Debug\netcoreapp2.1\ProductShop.runtimeconfig.dev.json
+C:\Users\calev\Documents\GitHub\SoftUni\EntityFramework\05.JSONProcessing\ProductShop\bin\Debug\netcoreapp2.1\ProductShop.dll
+C:\Users\calev\Documents\GitHub\SoftUni\EntityFramework\05.JSONProcessing\ProductShop\bin\Debug\netcoreapp2.1\ProductShop.pdb
+C:\Users\calev\Documents\GitHub\SoftUni\EntityFramework\05.JSONProcessing\ProductShop\obj\Debug\netcoreapp2.1\ProductShop.csproj.AssemblyReference.cache
+C:\Users\calev\Documents\GitHub\SoftUni\EntityFramework\05.JSONProcessing\ProductShop\obj\Debug\netcoreapp2.1\ProductShop.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\calev\Documents\GitHub\SoftUni\EntityFramework\05.JSONProcessing\ProductShop\obj\Debug\netcoreapp2.1\ProductShop.AssemblyInfoInputs.cache
+C:\Users\calev\Documents\GitHub\SoftUni\EntityFramework\05.JSONProcessing\ProductShop\obj\Debug\netcoreapp2.1\ProductShop.AssemblyInfo.cs
+C:\Users\calev\Documents\GitHub\SoftUni\EntityFramework\05.JSONProcessing\ProductShop\obj\Debug\netcoreapp2.1\ProductShop.csproj.CoreCompileInputs.cache
+C:\Users\calev\Documents\GitHub\SoftUni\EntityFramework\05.JSONProcessing\ProductShop\obj\Debug\netcoreapp2.1\ProductShop.dll
+C:\Users\calev\Documents\GitHub\SoftUni\EntityFramework\05.JSONProcessing\ProductShop\obj\Debug\netcoreapp2.1\ProductShop.pdb
+C:\Users\calev\Documents\GitHub\SoftUni\EntityFramework\05.JSONProcessing\ProductShop\obj\Debug\netcoreapp2.1\ProductShop.genruntimeconfig.cache
