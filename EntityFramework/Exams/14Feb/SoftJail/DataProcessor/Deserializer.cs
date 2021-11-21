@@ -24,9 +24,7 @@
             
             foreach (var departmentCell in departmentsCells)
             {
-                if (!IsValid(departmentCell) ||
-                    !departmentCell.Cells.All(IsValid) ||
-                    departmentCell.Cells.Count == 0) // bateee
+                if (!IsValid(departmentCell)) 
                 {
                     sb.AppendLine("Invalid Data");
                     continue;
@@ -34,14 +32,38 @@
 
                 var department = new Department
                 {
-                    Name = departmentCell.Name,
-                    Cells = departmentCell.Cells.Select(x => new Cell
-                    {
-                        CellNumber = x.CellNumber,
-                        HasWindow = x.HasWindow
-                    })
-                    .ToList()
+                    Name = departmentCell.Name
                 };
+
+                bool isDepValid = true;
+
+                foreach (var cellDto in departmentCell.Cells)
+                {
+                    if (!IsValid(cellDto))
+                    {
+                        isDepValid = false;
+                        break;
+                    }
+
+                    department.Cells.Add(new Cell()
+                    {
+                        CellNumber = cellDto.CellNumber,
+                        HasWindow = cellDto.HasWindow
+                    });
+                }
+
+                if (!isDepValid)
+                {
+                    sb.AppendLine("Invalid Data");
+                    continue;
+                }
+
+                if (department.Cells.Count == 0)
+                {
+                    sb.AppendLine("Invalid Data");
+                    continue;
+                }
+
 
                 departments.Add(department);
 
