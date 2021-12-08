@@ -1,31 +1,42 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import { format } from "timeago.js"
+import { format } from "timeago.js";
 
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 import "./post.css";
+import axios from "axios";
+import { AuthContext } from "../../context/AuthContext";
 
 //import { Users } from "../../dummyData";
-const API_URL = 'http://localhost:8800';
+const API_URL = "http://localhost:8800";
 
 export default function Post({ post }) {
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState({});
-  const PF = "http://localhost:3000/assets/";
+  const PF = "http://localhost:8800/images/";
+  const { user: currentUser } = useContext(AuthContext);
+
+  useEffect(() => {
+    setIsLiked(post.likes.includes(currentUser._id));
+  }, [currentUser._id, post.likes]);
 
   useEffect(() => {
     const fetchUser = async () => {
-        const response = await fetch(`${API_URL}/api/users?userId=${post.userId}`);
-        const res = await response.json();
-        setUser(res);
+      const response = await fetch(
+        `${API_URL}/api/users?userId=${post.userId}`
+      );
+      const res = await response.json();
+      setUser(res);
     };
     fetchUser();
   }, [post.userId]);
 
-
   const likeHandler = () => {
+    try {
+      axios.put("/posts/" + post._id + "/like", { userId: currentUser._id });
+    } catch (err) {}
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
   };
@@ -36,15 +47,17 @@ export default function Post({ post }) {
         <div className="postTop">
           <div className="postTopLeft">
             <Link to={`profile/${user.username}`}>
-            <img
-              className="postProfileImg"
-              src={user.profilePicture || PF+"person/noAvatar.png"}
-              alt=""
-            />
+              <img
+                className="postProfileImg"
+                src={
+                  user.profilePicture
+                    ? PF + user.profilePicture
+                    : PF + "person/noAvatar.png"
+                }
+                alt=""
+              />
             </Link>
-            <span className="postUserName">
-              {user.username}
-            </span>
+            <span className="postUserName">{user.username}</span>
             <span className="postDate">{format(post.createdAt)}</span>
           </div>
           <div className="postTopRight">

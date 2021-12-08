@@ -1,5 +1,8 @@
 import React, { useContext, useRef } from "react";
 
+//import CircularProgress from "@mui/material/CircularProgress";
+import LinearProgress from "@mui/material/LinearProgress";
+
 import "./login.css";
 
 import { loginCall } from "../../apiCalls";
@@ -8,11 +11,14 @@ import { AuthContext } from "../../context/AuthContext";
 export default function Login() {
   const email = useRef();
   const password = useRef();
-  const {user, isFetching, error, dispatch} = useContext(AuthContext);
+  const { user, isFetching, error, dispatch } = useContext(AuthContext);
 
   const handleClick = (e) => {
     e.preventDefault();
-      loginCall({email: email.current.value, password: password.current.value}, dispatch);
+    loginCall(
+      { email: email.current.value, password: password.current.value },
+      dispatch
+    );
   };
 
   console.log(user);
@@ -43,10 +49,12 @@ export default function Login() {
               className="loginInput"
               ref={password}
             />
-            <button className="loginButton">{isFetching ? "loading" : "Log In"}</button>
+            <button className="loginButton" type="submit" disabled={isFetching}>
+              {isFetching ? <LinearProgress /> : "Log In"}
+            </button>
             <span className="loginForgot">Forgot Password</span>
             <button className="loginRegisterButton">
-              Create a New Account
+            {isFetching ? <LinearProgress /> : "Create a New Account"}
             </button>
           </form>
         </div>

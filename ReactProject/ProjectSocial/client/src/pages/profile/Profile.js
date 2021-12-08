@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from 'react-router';
+import { useParams } from "react-router";
 
 import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
@@ -10,7 +10,8 @@ import "./profile.css";
 const API_URL = "http://localhost:8800";
 
 export default function Profile() {
-  const PF = "http://localhost:3000/assets/";
+  const PF = "http://localhost:8800/images/";
+
   const [user, setUser] = useState({});
   const username = useParams().username;
 
@@ -33,12 +34,20 @@ export default function Profile() {
             <div className="profileCover">
               <img
                 className="profileCoverImg"
-                src={user.coverPicture || PF + "person/noCover.png"}
+                src={
+                  user.coverPicture
+                    ? PF + user.coverPicture
+                    : PF + "person/noCover.png"
+                }
                 alt=""
               />
               <img
                 className="profileUserImg"
-                src={user.profilePicture || PF + "person/noAvatar.png"}
+                src={
+                  user.profilePicture
+                    ? PF + user.profilePicture
+                    : PF + "person/noAvatar.png"
+                }
                 alt=""
               />
             </div>

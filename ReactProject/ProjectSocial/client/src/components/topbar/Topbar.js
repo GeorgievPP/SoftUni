@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
 // icons
@@ -8,12 +8,17 @@ import ChatIcon from "@mui/icons-material/Chat";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 
 import "./topbar.css";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function Topbar() {
+  const { user } = useContext(AuthContext);
+  const PF = "http://localhost:8800/images/";
+
+
   return (
     <div className="topbarContainer">
       <div className="topbarLeft">
-        <Link to="/" style={ {textDecoration: "none"} }>
+        <Link to="/" style={{ textDecoration: "none" }}>
           <span className="logo">ProjectSocial</span>
         </Link>
       </div>
@@ -45,7 +50,17 @@ export default function Topbar() {
             <span className="topbarIconBadge">1</span>
           </div>
         </div>
-        <img src="/assets/person/11.jpg" alt="" className="topbarImg" />
+        <Link to={`/profile/${user.username}`}>
+          <img
+            src={
+              user.profilePicture
+                ? PF + user.profilePicture
+                : PF + "person/noAvatar.png"
+            }
+            alt=""
+            className="topbarImg"
+          />
+        </Link>
       </div>
     </div>
   );

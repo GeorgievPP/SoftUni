@@ -2,7 +2,7 @@ import React from "react";
 import "./online.css";
 
 export default function Online({ user }) {
-  const PF = "http://localhost:3000/assets/";
+  const PF = "http://localhost:8800/images/";
 
   return (
     <li className="rightbarFriend">
