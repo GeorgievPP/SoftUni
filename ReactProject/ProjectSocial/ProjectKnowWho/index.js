@@ -5,6 +5,7 @@ const typeDefs = require("./graphql/typeDefs");
 const resolvers = require("./graphql/resolvers");
 const { DB_CONNECTION_STRING } = require("./config");
 
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
