@@ -1,4 +1,4 @@
-const { gql } = require("apollo-server");
+const { gql } = require('apollo-server');
 
 module.exports = gql`
   type Post {
@@ -11,13 +11,13 @@ module.exports = gql`
     likeCount: Int!
     commentCount: Int!
   }
-  type Comment{
+  type Comment {
     id: ID!
     createdAt: String!
     username: String!
     body: String!
   }
-  type Like{
+  type Like {
     id: ID!
     createdAt: String!
     username: String!
@@ -48,7 +48,7 @@ module.exports = gql`
     deleteComment(postId: ID!, commentId: ID!): Post!
     likePost(postId: ID!): Post!
   }
-  # type Subscription{
-  #   newPost: Post!
-  # }
+  type Subscription {
+    newPost: Post!
+  }
 `;
