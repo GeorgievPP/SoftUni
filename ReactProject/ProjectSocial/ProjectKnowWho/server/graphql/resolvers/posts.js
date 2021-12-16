@@ -13,6 +13,15 @@ module.exports = {
         throw new Error(err);
       }
     },
+    async getUserPosts(_, {body}, context) {
+      try {
+        const user = checkAuth(context);
+        const posts = await Post.find({username: user.username}).sort({ createdAt: -1 });
+        return posts;
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
     async getPost(_, { postId }) {
       try {
         const post = await Post.findById(postId);
